@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f5556c1a5e4b189d3dfea45b9b7e1e, type: 3}
+  m_Name: "\u0410\u0440\u043C\u0435\u0439\u0441\u043A\u0438\u0439 \u043D\u043E\u0436"
+  m_EditorClassIdentifier: 
+  _name: "\u0410\u0440\u043C\u0435\u0439\u0441\u043A\u0438\u0439 \u043D\u043E\u0436"
+  _sprite: {fileID: 21300000, guid: 7741288af051e3245af8f2efc6a8f31f, type: 3}
+  _description: "\u041D\u043E\u0436 \u0434\u043B\u044F \u0432\u043E\u0435\u043D\u043D\u044B\u0445"
+  _damage: 10
+  _attackTime: 0.5
+  _attackRange: 1

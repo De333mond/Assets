@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(ItemDropper))]
 public class Enemy : Entity
@@ -22,7 +23,7 @@ public class Enemy : Entity
     
     [SerializeField] private AudioClip walk, attack;
     
-    
+        
 
     private AudioSource _source;
     private Vector3 _startPosition;
@@ -33,18 +34,22 @@ public class Enemy : Entity
     private bool _following, _attacking;
     private float direction = 1f;
     
-    void Awake()
+    void Start()
     {
         _startPosition = transform.position;
         _rigidbody = GetComponent<Rigidbody2D>();
         _itemDropper = GetComponent<ItemDropper>();
-        DeathEvent.AddListener(() =>
-        {
-            _itemDropper.DropItems();
-        });
+        DeathEvent.AddListener(DropItems);
         _source = GetComponent<AudioSource>();
         _source.playOnAwake = false;
     }
+
+    private void DropItems()
+    {
+        Debug.Log("items has ben dropped");  
+        _itemDropper.DropItems();
+    }
+
 
     void FixedUpdate()
     {

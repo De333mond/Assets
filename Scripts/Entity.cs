@@ -20,7 +20,7 @@ public class Entity : MonoBehaviour
     public string _name;
     public UnityEvent DeathEvent;
 
-    private void Start()
+    private void Awake()
     {
         _healthBar?.SetMaxHealth(maxHealth);
         Health = maxHealth;
