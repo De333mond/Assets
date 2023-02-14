@@ -23,7 +23,7 @@ public class Playeraudio : MonoBehaviour
     {
         if (Input.GetAxis("Horizontal") != 0 && !attacking && sours.clip != _walk && Mathf.Abs(_rigidbody.velocity.y) < 0.001f)
         {
-            Debug.Log("Play run");
+            Debug.Log("Play Run");
             sours.clip = _walk;
             sours.loop = true;
             sours.Play();

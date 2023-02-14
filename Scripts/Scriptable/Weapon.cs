@@ -1,15 +1,15 @@
 using Scriptable;
+using Stats_system;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Weapon : Item, IUsable 
+public class Weapon : Item, IUsable
 {
-    [SerializeField] protected float _damage;
-    [SerializeField] protected float _attackTime;
+    [FormerlySerializedAs("WeaponStats")] [SerializeField] private WeaponStats _weaponStats;
+    public WeaponStats Stats => _weaponStats;
 
-    public override string ExtraInfo => $"Damge: {_damage}\n Attack time: {_attackTime}\n";
+    public override string ExtraInfo => $"Damge: {_weaponStats}\n Cooldown: {_weaponStats.Cooldown}\n";
     
-    public float Damage => _damage;
-    public float AttackTime => _attackTime;
     public void UseEffect(Player player)
     {
         Weapon oldWeapon = player.Inventory.ActiveWeapon;

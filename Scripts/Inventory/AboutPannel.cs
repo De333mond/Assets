@@ -12,6 +12,8 @@ public class AboutPannel : MonoBehaviour
     [SerializeField] private TMP_Text description;
     [SerializeField] private TMP_Text extraInfo;
 
+    private bool _isBagDisplayed = true;
+    
 
     private void Start()
     {
@@ -20,6 +22,9 @@ public class AboutPannel : MonoBehaviour
 
     public void ShowInfo(Item item)
     {
+        if (!_isBagDisplayed)
+            return;
+        
         gameObject.SetActive(true);
         if (item is null)
         {
@@ -47,5 +52,12 @@ public class AboutPannel : MonoBehaviour
         {
             extraInfo.gameObject.SetActive(false);
         }
+
+        
+    }
+    
+    public void SetIsBagDisplayed(bool isDisplayed)
+    {
+        _isBagDisplayed = isDisplayed;
     }
 }

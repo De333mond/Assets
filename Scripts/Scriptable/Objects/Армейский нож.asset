@@ -15,6 +15,9 @@ MonoBehaviour:
   _name: "\u0410\u0440\u043C\u0435\u0439\u0441\u043A\u0438\u0439 \u043D\u043E\u0436"
   _sprite: {fileID: 21300000, guid: 7741288af051e3245af8f2efc6a8f31f, type: 3}
   _description: "\u041D\u043E\u0436 \u0434\u043B\u044F \u0432\u043E\u0435\u043D\u043D\u044B\u0445"
-  _damage: 10
-  _attackTime: 0.5
+  _weaponStats:
+    Damage: 7
+    Cooldown: 0.55
+    CriticalChance: 0.3
+    CriticalMultiplier: 0.7
   _attackRange: 1

@@ -36,13 +36,13 @@ public class PlayerAttack : MonoBehaviour
             if (target.CompareTag("Enemy"))
             {
                 Enemy enemy = target.GetComponent<Enemy>();
-                enemy.TakeDamage(weapon.Damage);
+                enemy.TakeDamage(_player.Stats.GetDamageWithWeapon(weapon));
             }
         }
     }
 
     public float GetAttackDuration()
-    {
-        return _player.Inventory.ActiveWeapon?.AttackTime ?? 0f;
+    { 
+        return _player.Inventory.ActiveWeapon?.Stats.Cooldown / _player.Stats.AttackSpeed ?? 0f;
     }
 }

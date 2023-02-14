@@ -66,6 +66,7 @@ namespace Inventory
         public void ToggleBagDisplay()
         {
             isBagDisplayed = !isBagDisplayed;
+            _aboutPannel.SetIsBagDisplayed(isBagDisplayed);
             if (!isBagDisplayed)
             {
                 SetActiveSlot(-1);

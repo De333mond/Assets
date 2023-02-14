@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(ItemDropper))]
 public class Enemy : Entity
@@ -14,8 +15,9 @@ public class Enemy : Entity
     [SerializeField] private float _movespeed;
     [SerializeField] private Vector2 _patrolRange;
     [SerializeField] private float _stayCooldown;
+
     [Header("Attack")]
-    [SerializeField] private float _damage;
+    // [SerializeField] private float _damage;
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackCooldown;
     [SerializeField] private Transform _attackPoint;
@@ -129,13 +131,12 @@ public class Enemy : Entity
         _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         _attacking = true;
         _animator.SetTrigger("Attack");
-        StartCoroutine(ResetAttackFlag(_attackCooldown));
-        
+        StartCoroutine(ResetAttackFlag(_attackCooldown * entityStats.AttackSpeed));
     }
 
     private IEnumerator ResetAttackFlag(float attackCooldown)
     {
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(attackCooldown / entityStats.AttackSpeed);
      
         Collider2D[] targets = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange);
         foreach (var target in targets)
@@ -143,7 +144,10 @@ public class Enemy : Entity
             if (target.CompareTag("Player"))
             {
                 var player = target.GetComponent<Entity>();
-                player.TakeDamage(_damage);
+                float damage = entityStats.BaseDamage;
+                if (Random.value < entityStats.CriticalChance)
+                    damage *= entityStats.CriticalMultiply;
+                player.TakeDamage(damage);
             }
         }
         

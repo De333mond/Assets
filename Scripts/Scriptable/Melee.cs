@@ -9,8 +9,8 @@ public class Melee : Weapon
     [SerializeField] private float _attackRange;
     public float AttackRange => _attackRange;
 
-    public override string ExtraInfo => $"Damge: {_damage}\n" +
-                                        $"Attack time: {_attackTime}s\n" +
+    public override string ExtraInfo => $"Damge: {Stats.Damage}\n" +
+                                        $"Attack time: {Stats.Cooldown}s\n" +
                                         $"Attack Range: {_attackRange}\n";
 }
 

@@ -1,18 +1,26 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : PhysicsObject {
 
     [SerializeField] private Animator animator;
-    [SerializeField] private float maxSpeed = 7;
+    // [SerializeField] private float maxSpeed = 7;
     [SerializeField] private float jumpTakeOffSpeed = 7;
     [SerializeField] private PlayerAttack _playerAttack;
 
     private Playeraudio _playeraudio;
     private Vector2 move = Vector2.zero;
+    private Player _player;
 
     public bool Grounded => grounded;
+
+    private void Awake()
+    {
+        _player = GetComponent<Player>();
+    }
 
     protected override void ComputeVelocity()
     {
@@ -22,9 +30,9 @@ public class PlayerController : PhysicsObject {
             transform.localScale = new Vector3(localScale.x * -1, localScale.y, localScale.z);
         }
         animator.SetBool ("grounded", grounded);
-        animator.SetFloat ("velocityX", Mathf.Abs (velocity.x) / maxSpeed);
+        animator.SetFloat ("velocityX", Mathf.Abs (velocity.x) / _player.Stats.WalkSpeed);
 
-        targetVelocity = move * maxSpeed;
+        targetVelocity = move * _player.Stats.WalkSpeed;
     }
 
     public void Attack()

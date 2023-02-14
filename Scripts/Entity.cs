@@ -1,19 +1,20 @@
 using System;
 using System.Collections;
 using New_Folder.Healthbar;
+using Stats_system;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Entity : MonoBehaviour
 {
-    [Header("Entity")]
-    [SerializeField] protected float maxHealth = 10;
+    [Header("Entity")] 
+    [SerializeField] protected Stats entityStats;
     [SerializeField] protected HealthBar _healthBar;
     [SerializeField] protected Animator _animator;
     private float _deathCooldown = 0.5f;
 
 
-    protected float Health;
     protected bool isAlive = true;
 
     public bool IsAlive => isAlive;
@@ -22,23 +23,24 @@ public class Entity : MonoBehaviour
 
     private void Awake()
     {
-        _healthBar?.SetMaxHealth(maxHealth);
-        Health = maxHealth;
-        _healthBar?.SetHealth(Health);
+        _healthBar?.SetMaxHealth(entityStats.MaxHealth);
+        _healthBar?.SetHealth(entityStats.Health);
         DeathEvent = new UnityEvent();
     }
 
     public void TakeDamage(float damage)
     {
-        if (isAlive)
+        if (isAlive && damage >= 0)
         {
+            damage *= entityStats.ArmorReduceMultiplier;
+            
             _animator.SetTrigger("Hurt");
-            Health -= damage;
-            Debug.Log($"{name} recieved {damage} damage! Health: {Health}");
+            entityStats.Health -= damage;
+            Debug.Log($"{name} recieved {damage} damage reduced by *{entityStats.ArmorReduceMultiplier}! Health: {entityStats.Health}");
 
-            _healthBar?.SetHealth(Health);
+            _healthBar?.SetHealth(entityStats.Health);
 
-            if (Health <= 0)
+            if (entityStats.Health <= 0)
             {
                 Die();
             }
@@ -47,10 +49,12 @@ public class Entity : MonoBehaviour
 
     public void AddHealth(float addedHealth)
     {
-        Health += addedHealth;
-        if (Health > maxHealth)
-            Health = maxHealth;
-        _healthBar?.SetHealth(Health);
+        entityStats.Health += addedHealth;
+        
+        if (entityStats.Health > entityStats.MaxHealth)
+            entityStats.Health = entityStats.MaxHealth;
+        
+        _healthBar?.SetHealth(entityStats.Health);
     }
 
     private void Die()
