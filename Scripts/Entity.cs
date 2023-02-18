@@ -1,46 +1,48 @@
 using System;
 using System.Collections;
+using Ability_system;
 using New_Folder.Healthbar;
 using Stats_system;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     [Header("Entity")] 
-    [SerializeField] protected Stats entityStats;
-    [SerializeField] protected HealthBar _healthBar;
+    [SerializeField] protected AbilitySystem _abilitySystem;
+    
+    [SerializeField] private HealthBar _healthBar;
     [SerializeField] protected Animator _animator;
+    
     private float _deathCooldown = 0.5f;
+    public bool IsAlive { get; private set; }
 
-
-    protected bool isAlive = true;
-
-    public bool IsAlive => isAlive;
-    public string _name;
     public UnityEvent DeathEvent;
 
-    private void Awake()
+    // public string _name;
+
+    protected virtual void Awake()
     {
-        _healthBar?.SetMaxHealth(entityStats.MaxHealth);
-        _healthBar?.SetHealth(entityStats.Health);
+        IsAlive = true;
+        _healthBar?.SetMaxHealth(_abilitySystem.Stats.MaxHealth);
+        _healthBar?.SetHealth(_abilitySystem.Stats.Health);
         DeathEvent = new UnityEvent();
     }
 
     public void TakeDamage(float damage)
     {
-        if (isAlive && damage >= 0)
+        if (IsAlive && damage >= 0)
         {
-            damage *= entityStats.ArmorReduceMultiplier;
-            
             _animator.SetTrigger("Hurt");
-            entityStats.Health -= damage;
-            Debug.Log($"{name} recieved {damage} damage reduced by *{entityStats.ArmorReduceMultiplier}! Health: {entityStats.Health}");
 
-            _healthBar?.SetHealth(entityStats.Health);
+            _abilitySystem.TakeDamage(damage);
+            
+            Debug.Log($"{name} recieved {damage} damage! Health: {_abilitySystem.Stats.Health}");
 
-            if (entityStats.Health <= 0)
+            _healthBar?.SetHealth(_abilitySystem.Stats.Health);
+
+            if (_abilitySystem.Stats.Health <= 0)
             {
                 Die();
             }
@@ -49,17 +51,17 @@ public class Entity : MonoBehaviour
 
     public void AddHealth(float addedHealth)
     {
-        entityStats.Health += addedHealth;
+        _abilitySystem.Stats.Health += addedHealth;
         
-        if (entityStats.Health > entityStats.MaxHealth)
-            entityStats.Health = entityStats.MaxHealth;
+        if (_abilitySystem.Stats.Health > _abilitySystem.Stats.MaxHealth)
+            _abilitySystem.Stats.Health = _abilitySystem.Stats.MaxHealth;
         
-        _healthBar?.SetHealth(entityStats.Health);
+        _healthBar?.SetHealth(_abilitySystem.Stats.Health);
     }
 
     private void Die()
     {
-        isAlive = false;
+        IsAlive = false;
         DeathEvent.Invoke();
         _animator.SetTrigger("Dead");
         StartCoroutine(DestroyAfterTime());

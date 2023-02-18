@@ -55,7 +55,7 @@ public class Enemy : Entity
 
     void FixedUpdate()
     {
-        if (isAlive)
+        if (IsAlive)
             Move();
     }
 
@@ -131,12 +131,12 @@ public class Enemy : Entity
         _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         _attacking = true;
         _animator.SetTrigger("Attack");
-        StartCoroutine(ResetAttackFlag(_attackCooldown * entityStats.AttackSpeed));
+        StartCoroutine(ResetAttackFlag(_attackCooldown * _abilitySystem.Stats.AttackSpeed));
     }
 
     private IEnumerator ResetAttackFlag(float attackCooldown)
     {
-        yield return new WaitForSeconds(attackCooldown / entityStats.AttackSpeed);
+        yield return new WaitForSeconds(attackCooldown / _abilitySystem.Stats.AttackSpeed);
      
         Collider2D[] targets = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange);
         foreach (var target in targets)
@@ -144,10 +144,11 @@ public class Enemy : Entity
             if (target.CompareTag("Player"))
             {
                 var player = target.GetComponent<Entity>();
-                float damage = entityStats.BaseDamage;
-                if (Random.value < entityStats.CriticalChance)
-                    damage *= entityStats.CriticalMultiply;
-                player.TakeDamage(damage);
+                // float damage = entityStats.BaseDamage;
+                // if (Random.value < entityStats.CriticalChance)
+                //     damage *= entityStats.CriticalMultiply;
+                
+                player.TakeDamage(_abilitySystem.Stats.BaseDamage);
             }
         }
         

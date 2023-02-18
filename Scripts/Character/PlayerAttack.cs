@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
             if (target.CompareTag("Enemy"))
             {
                 Enemy enemy = target.GetComponent<Enemy>();
-                enemy.TakeDamage(_player.Stats.GetDamageWithWeapon(weapon));
+                enemy.TakeDamage(_player.Damage);
             }
         }
     }

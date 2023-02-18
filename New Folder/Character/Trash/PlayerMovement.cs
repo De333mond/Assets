@@ -139,8 +139,8 @@ public class PlayerMovement : MonoBehaviour
                     {
                         entity.TakeDamage(1f);
 
-                        if (entity._name != "")
-                            Debug.Log($"{entity._name} received 1 damage");
+                        // if (entity._name != "")
+                        //     Debug.Log($"{entity._name} received 1 damage");
                     }
                 }
                 else
