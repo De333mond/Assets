@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Character;
+using Character;
+using UnityEngine;
 
 public interface IUsable 
 {

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Character.Character_1._0;
+﻿using Character;
 using UnityEngine;
 
-namespace MetroidvaniaController.Scripts.Enemies
+namespace Enemies
 {
 	public class ThrowableProjectile : MonoBehaviour
 	{
@@ -23,12 +21,12 @@ namespace MetroidvaniaController.Scripts.Enemies
 		{
 			if (collision.gameObject.tag == "Player")
 			{
-				collision.gameObject.GetComponent<CharacterController2D>().ApplyDamage(2f, transform.position);
+				collision.gameObject.GetComponent<CharacterController2D>().TakeDamage(2f, transform.position);
 				Destroy(gameObject);
 			}
 			else if (owner != null && collision.gameObject != owner && collision.gameObject.tag == "Enemy")
 			{
-				collision.gameObject.SendMessage("ApplyDamage", Mathf.Sign(direction.x) * 2f);
+				collision.gameObject.SendMessage("TakeDamage", Mathf.Sign(direction.x) * 2f);
 				Destroy(gameObject);
 			}
 			else if (collision.gameObject.tag != "Enemy" && collision.gameObject.tag != "Player")

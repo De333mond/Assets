@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Character;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class Saw : MonoBehaviour
 {
@@ -20,7 +17,7 @@ public class Saw : MonoBehaviour
     
     private Vector3 _startPosition;
     private Vector3 _direction;
-    private Player _player;
+    private CharacterController2D _player;
     private float _attackCooldown = 1;
     private bool _sleep, _onCooldown, waitStart = true;
     void Start()
@@ -62,8 +59,8 @@ public class Saw : MonoBehaviour
         if (col.gameObject.CompareTag("Player") && !_onCooldown)
         {
             _onCooldown = true;
-            _player = _player ? _player : col.gameObject.GetComponent<Player>();
-            _player.TakeDamage(damage);
+            _player = _player ? _player : col.gameObject.GetComponent<CharacterController2D>();
+            _player.TakeDamage(damage, transform.position);
             StartCoroutine(resetCooldown());
         }
     }

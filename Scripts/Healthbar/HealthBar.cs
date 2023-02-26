@@ -15,6 +15,7 @@ namespace New_Folder.Healthbar
         public void SetMaxHealth(float health)
         {
             healthBar_slider.maxValue = health;
+            healthBar_slider.value = health;
         }
 
         public void SetHealth(float health)

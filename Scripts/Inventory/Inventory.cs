@@ -1,6 +1,5 @@
-﻿using Scriptable;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using Character;
+using Scriptable;
 using UnityEngine.Events;
 
 namespace Inventory
@@ -10,11 +9,12 @@ namespace Inventory
         public readonly UnityEvent<Item[]> OnBagChanged;
         public readonly UnityEvent<Item> OnWeaponChanged;
         public readonly UnityEvent<int> OnActiveSlotChanged;
-        public int ActiveSlot => _activeSlot;
-        public Item ActiveSlotItem => _bag[ActiveSlot];
         
-        private int _bagSize, _activeSlot;
+        public Item ActiveSlotItem => _bag[ActiveSlot];
+        public int ActiveSlot { get; private set; }
         public Weapon ActiveWeapon;
+
+        private int _bagSize;
         private Item[] _bag;
         private Player _parent;
     
@@ -22,7 +22,7 @@ namespace Inventory
         {
             _bagSize = bagSize;
             _bag = new Item[_bagSize];
-            _activeSlot = 0;
+            ActiveSlot = 0;
             ActiveWeapon = null;
             _parent = parent;
 
@@ -37,6 +37,7 @@ namespace Inventory
             if ((item is Weapon) && (ActiveWeapon is null))
             {
                 ActiveWeapon = item as Weapon;
+                _parent.ApplyItemStats(ActiveWeapon.Stats);
                 OnWeaponChanged.Invoke(ActiveWeapon);
                 return;
             }
@@ -64,13 +65,13 @@ namespace Inventory
     
         public void ChangeActiveSlot(int offset)
         {
-            _activeSlot += offset;
+            ActiveSlot += offset;
             
-            if (_activeSlot < 0)
-                _activeSlot = _bagSize-1;
+            if (ActiveSlot < 0)
+                ActiveSlot = _bagSize-1;
             
-            _activeSlot %= _bagSize;
-            OnActiveSlotChanged.Invoke(_activeSlot);
+            ActiveSlot %= _bagSize;
+            OnActiveSlotChanged.Invoke(ActiveSlot);
         }
 
 
@@ -80,7 +81,7 @@ namespace Inventory
             {
                 IUsable item = _bag[ActiveSlot] as IUsable;
                 item?.UseEffect(_parent);
-                OnActiveSlotChanged.Invoke(_activeSlot);
+                OnActiveSlotChanged.Invoke(ActiveSlot);
             }
         }
 

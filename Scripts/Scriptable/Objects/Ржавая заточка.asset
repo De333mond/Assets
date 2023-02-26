@@ -17,8 +17,14 @@ MonoBehaviour:
   _description: "\u041C\u043E\u0436\u043D\u043E \u043A\u043E\u0433\u043E \u0442\u043E
     \u043F\u043E\u0440\u0430\u043D\u0438\u0442\u044C"
   _weaponStats:
-    Damage: 5
-    Cooldown: 0.6
+    Health: 0
+    MaxHealth: 50
+    BaseDamage: 10
+    Armor: 0
     CriticalChance: 0.1
-    CriticalMultiplier: 0.5
+    CriticalMultiply: 1
+    AttackSpeed: 1
+    WalkSpeed: 0
+    IsInvincible: 0
+    Cooldown: 0.6
   _attackRange: 1

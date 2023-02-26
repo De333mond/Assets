@@ -1,4 +1,5 @@
 using System.Collections;
+using Character;
 using UnityEngine;
 
 public class Landmine : MonoBehaviour
@@ -11,7 +12,7 @@ public class Landmine : MonoBehaviour
     
     private Animator _animator;
     private AudioSource source;
-    private Player _player;
+    private CharacterController2D _player;
 
     void Start()
     {
@@ -23,7 +24,7 @@ public class Landmine : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _player = other.gameObject.GetComponent<Player>();
+            _player = other.gameObject.GetComponent<CharacterController2D>();
             StartCoroutine(Explode());
         }
     }
@@ -38,7 +39,7 @@ public class Landmine : MonoBehaviour
         source.loop = false;
         
         if (Vector2.Distance(transform.position, _player.gameObject.transform.position) <= explosionRange)
-            _player.TakeDamage(damage);
+            _player.TakeDamage(damage, transform.position);
     }
 
     private void DestroyObject()

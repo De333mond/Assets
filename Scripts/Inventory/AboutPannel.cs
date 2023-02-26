@@ -35,14 +35,16 @@ public class AboutPannel : MonoBehaviour
         title.text = item.Name;
         description.text = item.Desrcription;
 
-        string extra = "";
-        if (item is Weapon weapon)
-            extra = weapon.ExtraInfo;
-        else if (item is HealItem heal)
-            extra = heal.ExtraInfo;
-        else if (item is Melee melee)
-            extra = melee.ExtraInfo;
+        // string extra = "";
+        // if (item is Weapon weapon)
+        //     extra = weapon.ExtraInfo();
+        // else if (item is HealItem heal)
+        //     extra = heal.ExtraInfo();
+        // else if (item is Melee melee)
+        //     extra = melee.ExtraInfo;
 
+        string extra = item.ExtraInfo();
+        
         if (extra != "")
         {
             extraInfo.gameObject.SetActive(true);

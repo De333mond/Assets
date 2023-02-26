@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 2272787434894352979}
   - component: {fileID: 285169307316473675}
   - component: {fileID: 285169307316473668}
+  - component: {fileID: 755835001151172464}
   - component: {fileID: 285169307316473665}
   - component: {fileID: 285169307316473670}
   - component: {fileID: 6455184434299744171}
@@ -137,6 +138,36 @@ CapsuleCollider2D:
   m_Offset: {x: -0.01445516, y: 1.9982872}
   m_Size: {x: 1.2222698, y: 4.1538696}
   m_Direction: 0
+--- !u!114 &755835001151172464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272787434894352978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53331dea07974539a6b6cb4cfdd154e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bagSize: 8
+  _statsSystem:
+    Stats:
+      Health: 0
+      MaxHealth: 50
+      BaseDamage: 5
+      Armor: 100
+      CriticalChance: 0.5
+      CriticalMultiply: 2
+      AttackSpeed: 1
+      WalkSpeed: 5
+      IsInvincible: 0
+    ArmorReduceCup: 0.8
+    FullResistArmorAmount: 1000
+    OnDeath:
+      m_PersistentCalls:
+        m_Calls: []
+  _healthBar: {fileID: 0}
 --- !u!114 &285169307316473665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9955788a5eaffa49a9297f38eaa6202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmgValue: 4
+  _attackRange: 1
   throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
   attackCheck: {fileID: 285169307136429368}
   animator: {fileID: 6928364511108958606}
@@ -180,8 +211,6 @@ MonoBehaviour:
   m_WallCheck: {fileID: 8136699265139394790}
   canDoubleJump: 0
   m_DashForce: 45
-  life: 10
-  invincible: 0
   animator: {fileID: 6928364511108958606}
   particleJumpUp: {fileID: 8136699265679690503}
   particleJumpDown: {fileID: 8136699264984376862}

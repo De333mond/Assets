@@ -1,4 +1,5 @@
 using System;
+using Character;
 using Scriptable;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;

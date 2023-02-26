@@ -1,120 +1,194 @@
-using UnityEngine;
+using System;
 using System.Collections;
-using Character.Character_1._0;
+using Character;
+using UnityEngine;
+using Stats;
+using Unity.VisualScripting;
 
-namespace MetroidvaniaController.Scripts.Enemies
+[RequireComponent(typeof(ItemDropper))]
+public class Enemy : MonoBehaviour
 {
+    //TODO fix attack mechanic because too hard to kill without take damage 
+    
+    [Header("Enemy")]
+    [Space]
+    [Header("Moving")]
+    [SerializeField] private Vector2 _patrolRange;
+    [SerializeField] private float _stayCooldown;
+    [Header("Attack")]
+    
+    [SerializeField] private StatsSystem _statsSystem;
+    [SerializeField] private float _attackRange;
+    [SerializeField] private float _attackCooldown;
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private Transform _target;
+    
+    [SerializeField] private AudioClip walk, attack;
+    [SerializeField] private Animator _animator;
+    
+        
 
-	public class Enemy : MonoBehaviour
-	{
+    private AudioSource _source;
+    private Vector3 _startPosition;
+    private ItemDropper _itemDropper;
+    private bool _isAlive, _canMove;    
+    private Rigidbody2D _rigidbody;
+    private bool _stay;
+    private bool _following, _attacking;
+    private float direction = 1f;
+    
+    void Start()
+    {
+        _startPosition = transform.position;
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _itemDropper = GetComponent<ItemDropper>();
+        // DeathEvent.AddListener(DropItems);
+        _isAlive = _canMove = true;
+        _source = GetComponent<AudioSource>();
+        _source.playOnAwake = false;
+        _statsSystem.Init();
+    }
 
-		public float life = 10;
-		private bool isPlat;
-		private bool isObstacle;
-		private Transform fallCheck;
-		private Transform wallCheck;
-		public LayerMask turnLayerMask;
-		private Rigidbody2D rb;
+    
+    
 
-		private bool facingRight = true;
+    void FixedUpdate()
+    {
+        if (_isAlive && _canMove)
+            Move();
+    }
 
-		public float speed = 5f;
+    private void Move()
+    {
+        float distanceToTarget = Vector2.Distance(_target.position, transform.position);
+        if (distanceToTarget < _patrolRange.x / 2 || _following)
+        {
+            _following = true;
+            if (!_attacking)
+            {
+                Follow();
+                var distance = Vector2.Distance(_target.position, _attackPoint.position);
+                if (distance < _attackRange)
+                {
+                    _source.clip = attack;
+                    _source.loop = false;
+                    _source.Play();
+                    Attack();
+                }
+            }
+        }
+        else
+        {
+            if (!_stay)
+            {
+                Patrol();
+            }
+            else
+            {
+                _rigidbody.velocity = Vector2.zero;
+            }
+        }
 
-		public bool isInvincible = false;
-		private bool isHitted = false;
+        var localScale = transform.localScale;
+        if (((_rigidbody.velocity.x < 0 && localScale.x > 0) || (_rigidbody.velocity.x > 0 && localScale.x < 0))
+            && Mathf.Abs(_rigidbody.velocity.x) > 0.001f)
+        {
+            transform.localScale = new Vector3(localScale.x * -1, localScale.y, localScale.z);
+        }
 
-		void Awake()
-		{
-			fallCheck = transform.Find("FallCheck");
-			wallCheck = transform.Find("WallCheck");
-			rb = GetComponent<Rigidbody2D>();
-		}
+        
+        _animator.SetFloat("velocity", Math.Abs(_rigidbody.velocity.x / _statsSystem.Stats.WalkSpeed));
+    }
 
-		// Update is called once per frame
-		void FixedUpdate()
-		{
+    private void Patrol()
+    {
+        bool outOfBounds = transform.position.x > _startPosition.x + _patrolRange.x / 2 ||
+                           transform.position.x < _startPosition.x - _patrolRange.x / 2;
+        
+        if (outOfBounds && !_stay)
+        {
+            direction *= -1;
+            _stay = true;
+            StartCoroutine(ResetStayState(_stayCooldown));
+        }
 
-			if (life <= 0)
-			{
-				transform.GetComponent<Animator>().SetBool("IsDead", true);
-				StartCoroutine(DestroyEnemy());
-			}
+        _rigidbody.velocity = new Vector2(_statsSystem.Stats.WalkSpeed * direction, _rigidbody.velocity.y);
+    }
 
-			isPlat = Physics2D.OverlapCircle(fallCheck.position, .2f, 1 << LayerMask.NameToLayer("Default"));
-			isObstacle = Physics2D.OverlapCircle(wallCheck.position, .2f, turnLayerMask);
+    
+    private void Follow()
+    {
+        if (transform.position.x > _target.position.x)
+            _rigidbody.velocity = new Vector2(-_statsSystem.Stats.WalkSpeed, _rigidbody.velocity.y);
+        else
+            _rigidbody.velocity = new Vector2(_statsSystem.Stats.WalkSpeed, _rigidbody.velocity.y);
+    }
 
-			if (!isHitted && life > 0 && Mathf.Abs(rb.velocity.y) < 0.5f)
-			{
-				if (isPlat && !isObstacle && !isHitted)
-				{
-					if (facingRight)
-					{
-						rb.velocity = new Vector2(-speed, rb.velocity.y);
-					}
-					else
-					{
-						rb.velocity = new Vector2(speed, rb.velocity.y);
-					}
-				}
-				else
-				{
-					Flip();
-				}
-			}
-		}
+    private void Attack()
+    {
+        
+        _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
+        _attacking = true;
+        _animator.SetTrigger("Attack");
+        StartCoroutine(ResetAttackFlag(_attackCooldown / _statsSystem.Stats.AttackSpeed));
+        
+    }
 
-		void Flip()
-		{
-			// Switch the way the player is labelled as facing.
-			facingRight = !facingRight;
+    public void TakeDamage(float damage)
+    {
+        _statsSystem.TakeDamage(damage);
+        _animator.SetTrigger("Hurt");
+        StartCoroutine(Stun());
 
-			// Multiply the player's x local scale by -1.
-			Vector3 theScale = transform.localScale;
-			theScale.x *= -1;
-			transform.localScale = theScale;
-		}
+        if (_statsSystem.Stats.Health < 0)
+        {
+            StartCoroutine(Die());
+        }
+    }
 
-		public void ApplyDamage(float damage)
-		{
-			if (!isInvincible)
-			{
-				float direction = damage / Mathf.Abs(damage);
-				damage = Mathf.Abs(damage);
-				transform.GetComponent<Animator>().SetBool("Hit", true);
-				life -= damage;
-				rb.velocity = Vector2.zero;
-				rb.AddForce(new Vector2(direction * 500f, 100f));
-				StartCoroutine(HitTime());
-			}
-		}
+    private IEnumerator Stun()
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(.2f);
+        _canMove = true;
+    }
 
-		void OnCollisionStay2D(Collision2D collision)
-		{
-			if (collision.gameObject.tag == "Player" && life > 0)
-			{
-				collision.gameObject.GetComponent<CharacterController2D>().ApplyDamage(2f, transform.position);
-			}
-		}
+    private IEnumerator Die()
+    {
+        _animator.SetTrigger("Dead");
+        yield return new WaitForSeconds(.4f);
+        Destroy(gameObject);
+        _itemDropper.DropItems();
+    }
 
-		IEnumerator HitTime()
-		{
-			isHitted = true;
-			isInvincible = true;
-			yield return new WaitForSeconds(0.1f);
-			isHitted = false;
-			isInvincible = false;
-		}
+    private IEnumerator ResetAttackFlag(float attackCooldown)
+    {
+        yield return new WaitForSeconds(.2f);
 
-		IEnumerator DestroyEnemy()
-		{
-			CapsuleCollider2D capsule = GetComponent<CapsuleCollider2D>();
-			capsule.size = new Vector2(1f, 0.25f);
-			capsule.offset = new Vector2(0f, -0.8f);
-			capsule.direction = CapsuleDirection2D.Horizontal;
-			yield return new WaitForSeconds(0.25f);
-			rb.velocity = new Vector2(0, rb.velocity.y);
-			yield return new WaitForSeconds(3f);
-			Destroy(gameObject);
-		}
-	}
+        Collider2D[] targets = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange);
+        foreach (var target in targets)
+        {
+            if (target.CompareTag("Player"))
+            {
+                var player = target.GetComponent<CharacterController2D>();
+                player.TakeDamage(_statsSystem.GetDamage(), transform.position);
+            }
+        }
+  
+        yield return new WaitForSeconds(attackCooldown);
+        
+        _attacking = false;
+    }
+
+    private IEnumerator ResetStayState(float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+        _stay = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(transform.position, _patrolRange);
+        Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
+    }
 }

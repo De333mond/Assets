@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Character.Character_1._0;
+using Character;
 using UnityEngine;
 
-
-namespace MetroidvaniaController.Scripts.Enemies
+namespace Enemies
 {
 	public class Ally : MonoBehaviour
 	{
@@ -182,12 +180,12 @@ namespace MetroidvaniaController.Scripts.Enemies
 						dmgValue = -dmgValue;
 					}
 
-					collidersEnemies[i].gameObject.SendMessage("ApplyDamage", dmgValue);
+					collidersEnemies[i].gameObject.SendMessage("TakeDamage", dmgValue);
 				}
 				else if (collidersEnemies[i].gameObject.tag == "Player")
 				{
 					collidersEnemies[i].gameObject.GetComponent<CharacterController2D>()
-						.ApplyDamage(2f, transform.position);
+						.TakeDamage(2f, transform.position);
 				}
 			}
 

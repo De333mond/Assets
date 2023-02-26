@@ -1,4 +1,5 @@
 using System.Collections;
+using Character;
 using Scriptable;
 using UnityEngine;
 
@@ -19,9 +20,7 @@ public class Collectable : MonoBehaviour
             _sprite.sprite = _item.Sprite;
             var collider = gameObject.AddComponent<PolygonCollider2D>();
             collider.isTrigger = true;
-            
         }
-
         get => _item;
     }
 

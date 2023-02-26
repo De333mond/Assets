@@ -14,6 +14,6 @@ namespace Scriptable
         public string Name => _name;
         public Sprite Sprite => _sprite;
 
-        public virtual string ExtraInfo => "";
+        public virtual string ExtraInfo() { return ""; }
     }
 }
