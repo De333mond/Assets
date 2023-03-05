@@ -3,7 +3,7 @@ using System.Collections;
 using Character;
 using UnityEngine;
 using Stats;
-using Unity.VisualScripting;
+ 
 
 [RequireComponent(typeof(ItemDropper))]
 public class Enemy : MonoBehaviour

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Scriptable;
 using UnityEngine;
 
 [RequireComponent(typeof(ItemDropper))]

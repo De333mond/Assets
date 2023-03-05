@@ -1,4 +1,5 @@
 ﻿using System;
+using PlayerInventory.Scriptable;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -32,7 +33,7 @@ namespace Stats
             Stats.Health = Stats.MaxHealth;
         }
 
-        public float GetDamageWithWeapon(Weapon weapon)
+        public float GetDamageWithWeapon(SpecialItem weapon)
         {
             float damage = Stats.BaseDamage + weapon.Stats.BaseDamage;
             if (Random.value < (Stats.CriticalChance + weapon.Stats.CriticalChance))

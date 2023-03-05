@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using PlayerInventory.Scriptable;
 using UnityEngine;
 
 namespace Character
@@ -44,7 +45,7 @@ namespace Character
 		//TODO: make it possible to damage enemies
 		public void Attack()
 		{
-			if (!canAttack || _player.Inventory.ActiveWeapon is null)
+			if (!canAttack || _player.Inventory.SpecialSlots[SlotType.Weapon] is null)
 				return;
 
 			float damage = _player.GetDamage();
