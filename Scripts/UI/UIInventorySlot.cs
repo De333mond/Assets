@@ -1,17 +1,21 @@
-﻿using PlayerInventory;
+﻿using System;
+using PlayerInventory;
 using PlayerInventory.Scriptable;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
 namespace UI
 {
     
-    public class UIInventorySlot : MonoBehaviour 
+    public class UIInventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image _itemIcon;
         [SerializeField] private Image _placeholder;
         [SerializeField] private Sprite _placeholderImage;
         
         private Item _item;
+        private UIInventory _uiInventory;
 
         public ItemType itemType = ItemType.Item;
         public SlotType slotType = SlotType.Item;
@@ -20,6 +24,8 @@ namespace UI
             _placeholder.sprite = _placeholderImage;
             if (_placeholderImage)
                 _placeholder.enabled = true;
+            
+            _uiInventory = FindObjectOfType<UIInventory>();
         }
 
         public Item Item
@@ -51,5 +57,17 @@ namespace UI
         }
 
         public bool IsSpecialSlot => slotType != SlotType.Item;
+
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (_item)
+                _uiInventory.InfoPanel.Show(_item);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _uiInventory.InfoPanel.Hide();
+        }
     }
 }

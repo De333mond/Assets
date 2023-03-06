@@ -10,17 +10,18 @@ namespace PlayerInventory
     [Serializable]
     public class Inventory 
     {
-        [SerializeField] private int _bagCapacity = 12;
+        // [SerializeField] private int _bagCapacity;
+        [field: SerializeField] public int Size { get; private set; }
         [SerializeField] private Item[] _bagItems;
 
+
         public UnityEvent<Item[]> onBagChanged;
-        public int Size { get => _bagCapacity; private set => _bagCapacity = value; }
+        
         public Dictionary<SlotType, SpecialItem> SpecialSlots;
 
-        public Inventory()
+        public void Init()
         {
-            _bagItems = new Item[_bagCapacity];
-            Size = _bagCapacity;
+            _bagItems = new Item[Size];
             onBagChanged = new UnityEvent<Item[]>();
             SpecialSlots = new Dictionary<SlotType, SpecialItem>()
             {

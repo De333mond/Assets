@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Character;
 using PlayerInventory.Scriptable;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,23 +9,25 @@ namespace UI
 {
     public class UIInventory : MonoBehaviour
     {
-        [SerializeField] private GameObject _bagSlotsParent;
-        [SerializeField] private GameObject _slotPrefab;
-        [SerializeField] private GameObject _imageHolderPrefab;
+        [SerializeField] private GameObject bagSlotsParent;
+        [SerializeField] private GameObject slotPrefab;
+        [SerializeField] private GameObject imageHolderPrefab;
+        [field: SerializeField] public UIItemInfoPanel InfoPanel { get; private set; }
 
-        private int _bagSlotsCount; 
+        private int _bagSlotsCount;
         private List<UIInventorySlot> _bagCells;
-        private bool isActive = false;
-        
-        public Image ImageHolder { get; private set; }
+        private bool _isActive;
 
+        public Image ImageHolder { get; private set; }
+        
+        
         private void Start()
         {
             _bagSlotsCount = Player.Instance.Inventory.Size;
             _bagCells = new List<UIInventorySlot>(new UIInventorySlot[_bagSlotsCount]);
             Player.Instance.Inventory.onBagChanged.AddListener(UpdateItems);
-            ImageHolder = Instantiate(_imageHolderPrefab, transform).GetComponent<Image>();
-            gameObject.SetActive(isActive);
+            ImageHolder = Instantiate(imageHolderPrefab, transform).GetComponent<Image>();
+            gameObject.SetActive(_isActive);
             InitBag();
         }
 
@@ -34,7 +37,7 @@ namespace UI
             {
                 if (!_bagCells[i])
                 {
-                    var slot = Instantiate(_slotPrefab, _bagSlotsParent.transform);
+                    var slot = Instantiate(slotPrefab, bagSlotsParent.transform);
                     _bagCells[i] = slot.GetComponent<UIInventorySlot>();
                 }
             }
@@ -50,8 +53,8 @@ namespace UI
 
         public void ToggleBagDisplay()
         {
-            isActive = !isActive;
-            gameObject.SetActive(isActive);
+            _isActive = !_isActive;
+            gameObject.SetActive(_isActive);
         }
         
         public void SwapItemsInInventory(UIInventorySlot from, UIInventorySlot to)

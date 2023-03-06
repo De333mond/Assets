@@ -9,22 +9,18 @@ namespace Character
     public class Player : MonoBehaviour
     {
         
-        [SerializeField] private StatsSystem _statsSystem;
+        [field: SerializeField] public StatsSystem StatsSystem { get; private set; }
         // [SerializeField] private HealthBar _healthBar;
 
-        public static Player Instance = null;
-
+        public static Player Instance;
         public Inventory Inventory;
-        public bool Invincible
-        {
-            get { return _statsSystem.Stats.IsInvincible; }
-            set { _statsSystem.Stats.IsInvincible = value; }
-        }
-        public float Health => _statsSystem.Stats.Health;
+        public float Health => StatsSystem.Stats.Health;
+        public bool IsAlive { private set; get; }
         
-        // States
-        public bool IsAlive { get; private set; }
+        public bool Invincible {  get => StatsSystem.Stats.IsInvincible;  set => StatsSystem.Stats.IsInvincible = value; }
+
         
+
         private void Awake()
         {
             if (!Instance)
@@ -33,23 +29,23 @@ namespace Character
                 Destroy(gameObject);
             DontDestroyOnLoad(gameObject);
             
-            Inventory = new Inventory();
-            _statsSystem.Init();
+            Inventory.Init();
+            StatsSystem.Init();
             // _healthBar.SetMaxHealth(_statsSystem.Stats.MaxHealth);
 
             IsAlive = true;
-            _statsSystem.OnDeath.AddListener(Die);
+            StatsSystem.OnDeath.AddListener(Die);
         }
 
         public void Heal(float value)
         {
-            _statsSystem.Heal(value);
+            StatsSystem.Heal(value);
         }
         
         public void TakeDamage(float damage)
         {
             Debug.Log($"Player take: {damage} damage");
-            _statsSystem.TakeDamage(damage);
+            StatsSystem.TakeDamage(damage);
             // _healthBar.SetHealth(_statsSystem.Stats.Health);
         }
         
@@ -57,7 +53,7 @@ namespace Character
         {
             float damage = 0;
             if (Inventory.SpecialSlots[SlotType.Weapon] is not null)
-                damage = _statsSystem.GetDamageWithWeapon(Inventory.SpecialSlots[SlotType.Weapon]);
+                damage = StatsSystem.GetDamageWithWeapon(Inventory.SpecialSlots[SlotType.Weapon]);
         
             Debug.Log($"Player give: {damage} damage");
             
@@ -66,13 +62,15 @@ namespace Character
         
         public void ApplyItemStats(Stats.Stats stats)
         {
-            _statsSystem.Stats += stats;
+            StatsSystem.Stats += stats;
             // _healthBar.SetMaxHealth(_statsSystem.Stats.MaxHealth);
+            StatsSystem.OnStatsChanged.Invoke();
         }
 
         public void RemoveItemStats(Stats.Stats stats)
         {
-            _statsSystem.Stats -= stats;
+            StatsSystem.Stats -= stats;
+            StatsSystem.OnStatsChanged.Invoke();
             // _healthBar.SetMaxHealth(_statsSystem.Stats.MaxHealth);
         }   
 

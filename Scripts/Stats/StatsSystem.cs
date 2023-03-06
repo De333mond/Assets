@@ -15,7 +15,7 @@ namespace Stats
         [SerializeField] private float FullResistArmorAmount = 1000f;
 
         [HideInInspector] public UnityEvent OnDeath;
-
+        [HideInInspector] public UnityEvent OnStatsChanged;
 
         private Animator _animator;
 
@@ -31,6 +31,7 @@ namespace Stats
         public void Init()
         {
             Stats.Health = Stats.MaxHealth;
+            OnStatsChanged = new UnityEvent();
         }
 
         public float GetDamageWithWeapon(SpecialItem weapon)
@@ -75,6 +76,8 @@ namespace Stats
     {
         [HideInInspector] public float Health;
         public float MaxHealth;
+        [HideInInspector] public float Mana;
+        public float MaxMana;
         public float BaseDamage;
         public float Armor;
         public float CriticalChance;
@@ -100,6 +103,7 @@ namespace Stats
         public static Stats operator +(Stats a, Stats b)
         {
             a.MaxHealth += b.MaxHealth;
+            a.MaxMana += b.MaxMana;
             a.BaseDamage += b.BaseDamage;
             a.Armor += b.Armor;
             a.CriticalChance += b.CriticalChance;
@@ -112,6 +116,7 @@ namespace Stats
         public static Stats operator -(Stats a, Stats b)
         {
             a.MaxHealth -= b.MaxHealth;
+            a.MaxMana -= b.MaxMana;
             a.BaseDamage -= b.BaseDamage;
             a.Armor -= b.Armor;
             a.CriticalChance -= b.CriticalChance;
@@ -125,7 +130,9 @@ namespace Stats
         {
             string result = "";
             if (MaxHealth > 0)
-                result += $"MaxHealth: +{MaxHealth}\n";
+                result += $"MaxHealth: +{MaxHealth}\n"; 
+            if (MaxMana > 0)
+                result += $"MaxMana: +{MaxMana}\n";
             if (BaseDamage > 0)
                 result += $"BaseDamage: +{BaseDamage}\n";
             if (Armor > 0)
