@@ -37,7 +37,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6422088306954798406
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -54,7 +54,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!212 &6422088306954798405
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -120,6 +120,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interractable: 1
+  glowPrefabs:
+  - Rarity: 0
+    GlowPrefab: {fileID: 8310117880542421069, guid: 38d31c8de0785dc428a26c3dc44d8e6d, type: 3}
+  - Rarity: 1
+    GlowPrefab: {fileID: 927832404263057596, guid: 000694c1f63f587488ab20f95c6536da, type: 3}
+  - Rarity: 2
+    GlowPrefab: {fileID: 1474788702735248140, guid: eb5c31a3f20a04241b72b7ea5d5fd30d, type: 3}
+  - Rarity: 3
+    GlowPrefab: {fileID: 6151353452414818167, guid: 3821a8cbf1fb149429e88ded43585fc1, type: 3}
 --- !u!82 &5857896641796494194
 AudioSource:
   m_ObjectHideFlags: 0
@@ -240,9 +249,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6422088307482987705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.703, y: 3.935, z: -2.332072}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6422088306954798404}
   m_Father: {fileID: 0}

@@ -25,9 +25,12 @@ MonoBehaviour:
     \u043B\u044E\u0431\u0443\u044E \u0442\u0435\u043C\u043D\u0443\u044E \u0430\u0442\u0430\u043A\u0443."
   sprite: {fileID: 1472649696, guid: 412d119300bc2dd468ada75933d2fbb3, type: 3}
   type: 2
+  Rarity: 0
   Stats:
     Health: 0
     MaxHealth: 0
+    Mana: 0
+    MaxMana: 0
     BaseDamage: 5
     Armor: 30
     CriticalChance: 0.09

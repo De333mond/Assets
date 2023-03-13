@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace PlayerInventory.Scriptable
 {
@@ -9,7 +10,7 @@ namespace PlayerInventory.Scriptable
         public string description;
         public Sprite sprite;
         public ItemType type;
-
+        public ItemRarity Rarity = ItemRarity.Common;
         public virtual string Info()
         {
             return "";

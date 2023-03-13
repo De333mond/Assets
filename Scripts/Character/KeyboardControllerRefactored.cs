@@ -36,7 +36,7 @@ namespace Character
             if (Input.GetKeyDown(KeyCode.LeftShift))
                 _playerMovement.Dash();
             
-            if (_player && _player.IsAlive)
+            if (_player && _player.IsAlive && _uiInventory)
             {
                 if (Input.GetKeyDown(KeyCode.I))
                 {
