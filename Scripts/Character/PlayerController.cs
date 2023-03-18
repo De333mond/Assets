@@ -7,12 +7,18 @@ public class PlayerController : PhysicsObject {
     [SerializeField] private Animator animator;
     [SerializeField] private float maxSpeed = 7;
     [SerializeField] private float jumpTakeOffSpeed = 7;
-    [SerializeField] private PlayerAttack _playerAttack;
+    [SerializeField] private Player player;
 
     private Playeraudio _playeraudio;
     private Vector2 move = Vector2.zero;
 
     public bool Grounded => grounded;
+
+    protected override void OnUpdate()
+    {
+        isAttacking = player.IsAttacking;
+        base.OnUpdate();
+    }
 
     protected override void ComputeVelocity()
     {
@@ -26,31 +32,7 @@ public class PlayerController : PhysicsObject {
 
         targetVelocity = move * maxSpeed;
     }
-
-    public void Attack()
-    {
-        float attackDuration = _playerAttack.GetAttackDuration();
-        if (!grounded || isAttacking || (attackDuration < 0.1f))
-        {
-            return;
-        }
-        
-        _playerAttack.Attack();
-
-        if (!_playeraudio)
-            _playeraudio = GetComponent<Playeraudio>();
-        
-        _playeraudio.PlayAttack();
-        
-        velocity.x = 0;
-        isAttacking = true;
-        StartCoroutine(WaitForAttack(attackDuration));
-        
-        int attackNum = Random.Range(0, _playerAttack.AttackAnimationsCount);
-        animator.SetInteger("numAttack", attackNum);
-        animator.SetTrigger("Attack");
-    }
-
+    
     public void CheckJump()
     {
         if (Input.GetButtonDown("Jump") && grounded && !isAttacking)
@@ -70,11 +52,5 @@ public class PlayerController : PhysicsObject {
     {
         if (!isAttacking)
             move.x = direction;
-    }
-
-    private IEnumerator WaitForAttack(float attackDuration)
-    {
-        yield return new WaitForSeconds(attackDuration);
-        isAttacking = false;
     }
 }

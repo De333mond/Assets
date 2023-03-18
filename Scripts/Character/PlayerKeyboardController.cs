@@ -6,13 +6,12 @@ public class PlayerKeyboardController : MonoBehaviour
     private PlayerController _playerController;
     private Player _player;
     private InventoryUI _inventoryUI;
-    private PlayerAttack _playerAttack;
+        
     void Start()
     {
         _playerController = GetComponent<PlayerController >();
         _player = GetComponent<Player>();
         _inventoryUI = FindObjectOfType<InventoryUI>();
-        _playerAttack = GetComponent<PlayerAttack>();
     }
 
     void Update()
@@ -44,11 +43,11 @@ public class PlayerKeyboardController : MonoBehaviour
                 
         }
 
-        if (_playerAttack && _player.IsAlive)
+        if (_player.IsAlive)
         {
             if (Input.GetMouseButton(0))
             {
-                _playerController.Attack();
+                _player.Attack();
             }
         }
     }

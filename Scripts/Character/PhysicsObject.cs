@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+ 
 public class PhysicsObject : MonoBehaviour {
 
     public float minGroundNormalY = .65f;
@@ -25,25 +26,37 @@ public class PhysicsObject : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D> ();
     }
 
-    void Start () 
+    private void Start()
+    {
+        OnStart();
+    }
+
+    private void Update()
+    {
+        OnUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        OnFixedUpdate();
+    }
+
+    protected virtual void OnStart () 
     {
         contactFilter.useTriggers = false;
         contactFilter.SetLayerMask (Physics2D.GetLayerCollisionMask (gameObject.layer));
         contactFilter.useLayerMask = true;
     }
 
-    void Update () 
+    protected virtual void OnUpdate () 
     {
         targetVelocity = Vector2.zero;
         ComputeVelocity ();    
     }
 
-    protected virtual void ComputeVelocity()
-    {
+    protected virtual void ComputeVelocity() { }
 
-    }
-
-    void FixedUpdate()
+    protected virtual void OnFixedUpdate()
     {
         if (!isAttacking)
         {
@@ -63,6 +76,10 @@ public class PhysicsObject : MonoBehaviour {
             move = Vector2.up * deltaPosition.y;
 
             Movement(move, true);
+        }
+        else
+        {
+            velocity.x = 0;
         }
     }
 

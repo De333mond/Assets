@@ -136,6 +136,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7076181974309505657
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +151,6 @@ GameObject:
   - component: {fileID: 9100694970621601637}
   - component: {fileID: 7076181974309505658}
   - component: {fileID: 7076181974309505659}
-  - component: {fileID: 7076181974309505660}
   - component: {fileID: 7076181974309505661}
   - component: {fileID: 7076181974309505662}
   m_Layer: 0
@@ -176,7 +176,7 @@ Transform:
   - {fileID: 9100694970784998675}
   - {fileID: 2134504954503959350}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &9100694970621601632
 Rigidbody2D:
@@ -259,6 +259,9 @@ MonoBehaviour:
   DeathEvent:
     m_PersistentCalls:
       m_Calls: []
+  _playerAttack:
+    attackPoint: {fileID: 9100694970784998675}
+    attackAnimationsCount: 3
 --- !u!114 &7076181974309505658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +279,7 @@ MonoBehaviour:
   animator: {fileID: 2134504954721100197}
   maxSpeed: 12
   jumpTakeOffSpeed: 20
-  _playerAttack: {fileID: 7076181974309505660}
+  player: {fileID: 9100694970621601637}
 --- !u!114 &7076181974309505659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,21 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b2ae06d2a9f1fb4592bfb0f437c1341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7076181974309505660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7076181974309505657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa357482dfd256458c87a2cc32456c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 2134504954721100197}
-  _attackPoint: {fileID: 9100694970784998675}
-  AttackAnimationsCount: 3
 --- !u!82 &7076181974309505661
 AudioSource:
   m_ObjectHideFlags: 0
