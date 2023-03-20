@@ -3,12 +3,10 @@ using UnityEngine;
 namespace Character
 {
 
-	public class PlayerMovement : MonoBehaviour
+	public class PlayerMovement : CharacterController2D
 	{
-
-		public CharacterController2D controller;
-		public Animator animator;
-
+		[Header("PlayerMovement")] [Space]
+		
 		public float runSpeed = 40f;
 
 		private float horizontalMove = 0f;
@@ -17,10 +15,18 @@ namespace Character
 
 		//bool dashAxis = false;
 
-		// Update is called once per frame
-		void Update()
+		protected override void OnAwake()
 		{
+			base.OnAwake();
+			
+			OnFallEvent.AddListener(OnFall);
+			OnLandEvent.AddListener(OnLanding);
+		}
 
+		protected override void OnUpdate()
+		{
+			base.OnUpdate();
+			
 			// horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
 			animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -76,10 +82,12 @@ namespace Character
 			animator.SetBool("IsJumping", false);
 		}
 
-		void FixedUpdate()
+		protected override void OnFixedUpdate()
 		{
+			base.OnFixedUpdate();
+			
 			// Move our character
-			controller.Move(horizontalMove * Time.fixedDeltaTime, jump, dash);
+			Move(horizontalMove * Time.fixedDeltaTime, jump, dash);
 			jump = false;
 			dash = false;
 		}

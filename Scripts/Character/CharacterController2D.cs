@@ -4,16 +4,23 @@ using UnityEngine.Events;
 
 namespace Character
 {
-
+	[System.Serializable]
+	public class BoolEvent : UnityEvent<bool>
+	{
+		
+	}
+	
 	public class CharacterController2D : MonoBehaviour
 	{
+		[Header("CharacterController2D")] [Space]
+
 		[SerializeField] private float m_JumpForce = 10f; // Amount of force added when the player jumps.
 		[SerializeField] private float _gravityForce = -9.8f;
 		[SerializeField] [Range(0, 5f)] private float _gravityScale = 1f;
 		[Space]
 		
 
-		[Range(0, .3f)] [SerializeField]
+		[SerializeField] [Range(0, .3f)]
 		private float m_MovementSmoothing = .05f; // How much to smooth out the movement
 
 		[SerializeField] private bool m_AirControl = false; // Whether or not a player can steer while jumping;
@@ -45,7 +52,8 @@ namespace Character
 		// public bool invincible = false; //If player can die
 		private bool canMove = true; //If player can move
 
-		[SerializeField] private Animator animator;
+		[SerializeField] protected Animator animator;
+
 		public ParticleSystem particleJumpUp; //Trail particles
 		public ParticleSystem particleJumpDown; //Explosion particles
 
@@ -54,17 +62,30 @@ namespace Character
 		private bool limitVelOnWallJump = false; //For limit wall jump distance with low fps
 		const float doubleJumpScaleModifier = .8f; //For reduce jump force doing second jump
 
-		[Header("Events")] [Space] public UnityEvent OnFallEvent;
-		public UnityEvent OnLandEvent;
+		protected UnityEvent OnFallEvent;
+		protected UnityEvent OnLandEvent;
 
 		private Player _player;
 		
-		[System.Serializable]
-		public class BoolEvent : UnityEvent<bool>
+		private void Awake()
 		{
+			if (gameObject.layer == m_WhatIsGround)
+				Debug.Log("Attention!: player layer == ground layer");
+
+			OnAwake();
 		}
 
-		private void Awake()
+		private void Update()
+		{
+			OnUpdate();
+		}
+		
+		private void FixedUpdate()
+		{
+			OnFixedUpdate();
+		}
+		
+		protected virtual void OnAwake()
 		{
 			if (!m_Rigidbody2D)
 				m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -81,54 +102,53 @@ namespace Character
 			_player = GetComponent<Player>();
 		}
 
-
-		private void FixedUpdate()
+		protected virtual void OnUpdate() { }
+		
+		protected virtual void OnFixedUpdate()
 		{
-			bool wasGrounded = m_Grounded;
-			m_Grounded = false;
-
-			// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-			// This can be done using layers instead but Sample Assets will not overwrite your project settings.
-			Collider2D[] colliders =
-				Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-			for (int i = 0; i < colliders.Length; i++)
-			{
-				if (colliders[i].gameObject != gameObject)
-					m_Grounded = true;
-				if (!wasGrounded)
-				{
-					OnLandEvent.Invoke();
-					if (!m_IsWall && !isDashing)
-						particleJumpDown.Play();
-					canDoubleJump = true;
-					if (m_Rigidbody2D.velocity.y < 0f)
-						limitVelOnWallJump = false;
-				}
+			GroundCheck();
+			WallsAndFallCheck();
+			LimitVelOnWallJump();
+		}
+		
+		private void GroundCheck()
+		{
+			bool groundContact = Physics2D.CircleCast(m_GroundCheck.position, k_GroundedRadius, 
+				Vector2.zero,0f, m_WhatIsGround);
+			
+			if(groundContact && !m_Grounded){
+				OnLandEvent.Invoke();
+				if (!m_IsWall && !isDashing)
+					particleJumpDown.Play();
+				canDoubleJump = true;
+				if (m_Rigidbody2D.velocity.y < 0f)
+					limitVelOnWallJump = false;
 			}
-
-	
-
+			
+			m_Grounded = groundContact;
+		}
+		
+		private void WallsAndFallCheck()
+		{
 			m_IsWall = false;
-
 			if (!m_Grounded)
 			{
 				OnFallEvent.Invoke();
-				Collider2D[] collidersWall =
-					Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_WhatIsGround);
-				for (int i = 0; i < collidersWall.Length; i++)
-				{
-					if (collidersWall[i].gameObject != null)
-					{
-						isDashing = false;
-						m_IsWall = true;
-					}
-				}
 				
 				prevVelocityX = m_Rigidbody2D.velocity.x;
 
 				m_Rigidbody2D.velocity += new Vector2(0, _gravityForce * _gravityScale * Time.fixedDeltaTime);
+				
+				bool wallContact = Physics2D.CircleCast(m_WallCheck.position, k_GroundedRadius, 
+					Vector2.zero,0f, m_WhatIsGround);
+				
+				m_IsWall = wallContact;
+				if (m_IsWall) isDashing = false;
 			}
+		}
 
+		private void LimitVelOnWallJump()
+		{
 			if (limitVelOnWallJump)
 			{
 				if (m_Rigidbody2D.velocity.y < -0.5f)
@@ -143,12 +163,7 @@ namespace Character
 					canMove = true;
 					m_Rigidbody2D.velocity = new Vector2(10f * transform.localScale.x, m_Rigidbody2D.velocity.y);
 				}
-				else if (jumpWallDistX < -2f)
-				{
-					limitVelOnWallJump = false;
-					m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-				}
-				else if (jumpWallDistX > 0)
+				else if (jumpWallDistX < -2f || jumpWallDistX > 0)
 				{
 					limitVelOnWallJump = false;
 					m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
@@ -156,8 +171,7 @@ namespace Character
 			}
 		}
 
-
-		public void Move(float move, bool jump, bool dash)
+		protected void Move(float move, bool jump, bool dash)
 		{
 			if (canMove)
 			{
@@ -285,9 +299,7 @@ namespace Character
 				}
 			}
 		}
-
 		
-
 		private void Flip()
 		{
 			// Switch the way the player is labelled as facing.
@@ -370,7 +382,7 @@ namespace Character
 			animator.SetBool("IsDead", true);
 			canMove = false;
 			_player.Invincible = true;
-			GetComponent<PlayerAttack>().enabled = false;
+			_player.CanAttack = false;
 			yield return new WaitForSeconds(0.4f);
 			m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
 			yield return new WaitForSeconds(1.1f);

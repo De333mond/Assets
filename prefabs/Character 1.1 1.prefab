@@ -43,9 +43,6 @@ GameObject:
   - component: {fileID: 3334392600979963760}
   - component: {fileID: 3334392600979963775}
   - component: {fileID: 2868362452092100427}
-  - component: {fileID: 3334392600979963770}
-  - component: {fileID: 3334392600979963773}
-  - component: {fileID: 8369473253273083792}
   - component: {fileID: 2681636465782095129}
   m_Layer: 1
   m_Name: Character 1.1 1
@@ -74,7 +71,7 @@ Transform:
   - {fileID: 6726239572808547130}
   - {fileID: 6726239573186958883}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &3334392600979963760
 Rigidbody2D:
@@ -150,6 +147,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53331dea07974539a6b6cb4cfdd154e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_JumpForce: 18
+  _gravityForce: -9.8
+  _gravityScale: 3
+  m_MovementSmoothing: 0.05
+  m_AirControl: 1
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 21
+  m_GroundCheck: {fileID: 6726239572422306635}
+  m_WallCheck: {fileID: 6726239573333539037}
+  canDoubleJump: 1
+  m_DashForce: 25
+  animator: {fileID: 5590450716771236277}
+  particleJumpUp: {fileID: 6726239572808547132}
+  particleJumpDown: {fileID: 6726239573186958885}
+  runSpeed: 40
   <StatsSystem>k__BackingField:
     Stats:
       Health: 0
@@ -171,103 +184,19 @@ MonoBehaviour:
     OnStatsChanged:
       m_PersistentCalls:
         m_Calls: []
+  playerAttack:
+    _attackRange: 1
+    throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
+    attackCheck: {fileID: 3334392600808307971}
+    animator: {fileID: 5590450716771236277}
+    canAttack: 1
+    isTimeToCheck: 0
   Inventory:
     <Size>k__BackingField: 16
     _bagItems: []
     onBagChanged:
       m_PersistentCalls:
         m_Calls: []
---- !u!114 &3334392600979963770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619112614521590377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9955788a5eaffa49a9297f38eaa6202, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackRange: 1
-  throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
-  attackCheck: {fileID: 3334392600808307971}
-  animator: {fileID: 5590450716771236277}
-  canAttack: 1
-  isTimeToCheck: 0
-  cam: {fileID: 0}
---- !u!114 &3334392600979963773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619112614521590377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 783f8b7882d2d2a42a5b76de9179978f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_JumpForce: 18
-  _gravityForce: -9.8
-  _gravityScale: 3
-  m_MovementSmoothing: 0.05
-  m_AirControl: 1
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 29
-  m_GroundCheck: {fileID: 6726239572422306635}
-  m_WallCheck: {fileID: 6726239573333539037}
-  canDoubleJump: 0
-  m_DashForce: 45
-  animator: {fileID: 5590450716771236277}
-  particleJumpUp: {fileID: 6726239572808547132}
-  particleJumpDown: {fileID: 6726239573186958885}
-  OnFallEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8369473253273083792}
-        m_TargetAssemblyTypeName: Character.Character_1._0.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnFall
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLandEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8369473253273083792}
-        m_TargetAssemblyTypeName: Character.Character_1._0.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnLanding
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &8369473253273083792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3619112614521590377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8644d33345e77614ba3ace9c18398d0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 3334392600979963773}
-  animator: {fileID: 5590450716771236277}
-  runSpeed: 40
 --- !u!114 &2681636465782095129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +316,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &5590450716771236272
 AudioSource:
   m_ObjectHideFlags: 0

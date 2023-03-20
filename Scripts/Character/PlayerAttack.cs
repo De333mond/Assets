@@ -5,42 +5,37 @@ using UnityEngine;
 
 namespace Character
 { 
-	public class PlayerAttack : MonoBehaviour
+	[System.Serializable]
+	public class PlayerAttack
 	{
 		// public float dmgValue = 4;
 		[SerializeField] private float _attackRange = 1f;
 		
-		
 		public GameObject throwableObject;
 		public Transform attackCheck;
-		private Rigidbody2D m_Rigidbody2D;
 		public Animator animator;
 		public bool canAttack = true;
 		public bool isTimeToCheck = false;
-
-		public GameObject cam;
 		
 		private int _attackVariantCycle = 0;
 		const int attacksCount = 4;
 		private Player _player;
 		
-		
-
-		private void Awake()
+		public void Init()
 		{
-			m_Rigidbody2D = GetComponent<Rigidbody2D>();
-			_player = GetComponent<Player>();
+			_player = Player.Instance;
 		}
+		
 		public void ThrowWeapon()
 		{
-			GameObject throwableWeapon = Instantiate(throwableObject,
-				transform.position + new Vector3(transform.localScale.x * 0.5f, -0.2f),
+			Transform playerTransform = _player.transform;
+			GameObject throwableWeapon = Player.Instantiate(throwableObject,
+				playerTransform.position + new Vector3(playerTransform.localScale.x * 0.5f, playerTransform.localScale.y * 3f),
 				Quaternion.identity) as GameObject;
-			Vector2 direction = new Vector2(transform.localScale.x, 0);
+			Vector2 direction = new Vector2(playerTransform.localScale.x, 0);
 			throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction;
 			throwableWeapon.name = "ThrowableWeapon";
 		}
-
 		
 		//TODO: make it possible to damage enemies
 		public void Attack()
@@ -48,7 +43,7 @@ namespace Character
 			if (!canAttack || _player.Inventory.SpecialSlots[SlotType.Weapon] is null)
 				return;
 
-			float damage = _player.GetDamage();
+			float damage = _player.GetWeaponDamage();
 
 			Collider2D[] targets = Physics2D.OverlapCircleAll(attackCheck.position, _attackRange);
 			foreach (var target in targets)
@@ -60,7 +55,7 @@ namespace Character
 			canAttack = false;
 			animator.SetBool("IsAttacking", true);
 			animator.SetInteger("numAttack", _attackVariantCycle++ % attacksCount);
-			StartCoroutine(AttackCooldown());
+			_player.StartCoroutine(AttackCooldown());
 		}
 
 		IEnumerator AttackCooldown()
