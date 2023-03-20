@@ -1,32 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-[Serializable]
-public class PlayerAttack
+public class PlayerAttack : MonoBehaviour
 {
-    private Player _player;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private int attackAnimationsCount = 4;
-    public int AttackAnimationsCount => attackAnimationsCount;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private Transform _attackPoint;
     
-    public void OnAwake(Player player)
+    public int AttackAnimationsCount = 4;
+    private Player _player;
+    
+    void Start()
     {
-        _player = player;
+        _player = GetComponent<Player>();
     }
 
     public void Attack()
     {
-        if (_player == null)
-        {
-            Debug.LogError("Not set Player script");
-            return;
-        }
-            
         if (_player.Inventory.ActiveWeapon is null)
             return;
-        
         
         Weapon weapon = _player.Inventory.ActiveWeapon;
         
@@ -38,7 +30,7 @@ public class PlayerAttack
 
     private void AttackWithMelee(Melee weapon)
     {
-        Collider2D[] targets = Physics2D.OverlapCircleAll(attackPoint.position, weapon.AttackRange);
+        Collider2D[] targets = Physics2D.OverlapCircleAll(_attackPoint.position, weapon.AttackRange);
         foreach (var target in targets)
         {
             if (target.CompareTag("Enemy"))
