@@ -92,7 +92,7 @@ namespace Enemies
 		{
 			if (collision.gameObject.tag == "Player" && life > 0)
 			{
-				collision.gameObject.GetComponent<Player>().TakeDamage(2f);
+				collision.gameObject.GetComponent<Player>().TakeDamage(new AttackStats(2));
 			}
 		}
 

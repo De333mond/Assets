@@ -85,12 +85,22 @@ namespace PlayerInventory
 
         public void ApplySpecial(int indexFrom, SlotType slotType)
         {
+            if (SpecialSlots[slotType] != null)
+            {
+                Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.Stats);
+            }
+                
             (_bagItems[indexFrom], SpecialSlots[slotType]) = (SpecialSlots[slotType], _bagItems[indexFrom] as SpecialItem);
             Player.Instance.ApplyItemStats(SpecialSlots[slotType]!.Stats);
         }
 
         public void RemoveSpecial(int indexTo, SlotType slotType)
         {
+            if (SpecialSlots[slotType] != null)
+            {
+                Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.Stats);
+            }
+            
             Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.Stats);
             (_bagItems[indexTo], SpecialSlots[slotType]) = (SpecialSlots[slotType], _bagItems[indexTo] as SpecialItem);
         }

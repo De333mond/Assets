@@ -3,6 +3,7 @@ using PlayerInventory;
 using PlayerInventory.Scriptable;
 using Stats;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Character
 {
@@ -59,22 +60,22 @@ namespace Character
             StatsSystem.Heal(value);
         }
         
-        public void TakeDamage(float damage)
+        public void TakeDamage(AttackStats attackStats)
         {
-            Debug.Log($"Player take: {damage} damage");
-            StatsSystem.TakeDamage(damage);
+            Debug.Log($"Player take: {attackStats.Magnitude} damage");
+            StatsSystem.TakeDamage(attackStats);
             // _healthBar.SetHealth(_statsSystem.Stats.Health);
         }
         
-        public float GetWeaponDamage()
+        public AttackStats GetWeaponDamage()
         {
-            float damage = 0;
+            AttackStats attackStats = new AttackStats();
             if (Inventory.SpecialSlots[SlotType.Weapon] is not null)
-                damage = StatsSystem.GetDamageWithWeapon(Inventory.SpecialSlots[SlotType.Weapon]);
+                attackStats = StatsSystem.GetDamageWithWeapon(Inventory.SpecialSlots[SlotType.Weapon] as Weapon);
         
-            Debug.Log($"Player give: {damage} damage");
+            Debug.Log($"Player give: {attackStats.Magnitude} damage");
             
-            return damage;
+            return attackStats;
         }
         
         public void ApplyItemStats(Stats.Stats stats)

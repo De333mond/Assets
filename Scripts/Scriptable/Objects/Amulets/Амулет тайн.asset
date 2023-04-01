@@ -25,13 +25,28 @@ MonoBehaviour:
     \u0438 \u0442\u0430\u0439\u043D\u0430\u043C\u0438."
   sprite: {fileID: 650820181, guid: 94e8c04738fe07f42ab5d74b27bb52c3, type: 3}
   type: 3
+  Rarity: 0
   Stats:
     Health: 0
     MaxHealth: 0
-    BaseDamage: 0
-    Armor: 0
-    CriticalChance: 0.14
-    CriticalMultiply: 0
-    AttackSpeed: 0
+    Mana: 0
+    MaxMana: 0
+    attackStats:
+      physicalDamage: 1
+      fireDamage: 0
+      waterDamage: 0
+      airDamage: 0
+      earthDamage: 1
+      criticalChance: 0.07
+      criticalMultiply: 0.02
+      attackSpeed: 0
+    resistStats:
+      resistReduceCup: 0
+      fullResistAmount: 0
+      physicalResistance: 2
+      fireResistance: 1
+      waterResistance: 1
+      airResistance: 1
+      earthResistance: 1
     WalkSpeed: 0
     IsInvincible: 0

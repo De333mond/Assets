@@ -169,15 +169,27 @@ MonoBehaviour:
       MaxHealth: 50
       Mana: 0
       MaxMana: 0
-      BaseDamage: 0
-      Armor: 0
+      attackStats:
+        physicalDamage: 0
+        fireDamage: 0
+        waterDamage: 0
+        airDamage: 0
+        earthDamage: 0
+        criticalChance: 0
+        criticalMultiply: 1
+      resistStats:
+        resistReduceCup: 0.8
+        fullResistAmount: 1000
+        physicalResistance: 0
+        fireResistance: 0
+        waterResistance: 0
+        airResistance: 0
+        earthResistance: 0
       CriticalChance: 0
       CriticalMultiply: 0
       AttackSpeed: 0
       WalkSpeed: 0
       IsInvincible: 0
-    ArmorReduceCup: 0.8
-    FullResistArmorAmount: 1000
     OnDeath:
       m_PersistentCalls:
         m_Calls: []

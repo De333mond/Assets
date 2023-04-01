@@ -28,7 +28,7 @@ namespace Enemies
 		public float rangeDist = 5f;
 		private bool canAttack = true;
 		private Transform attackCheck;
-		public float dmgValue = 4;
+		public AttackStats dmgValue = new AttackStats(4);
 
 		public GameObject throwableObject;
 
@@ -177,7 +177,7 @@ namespace Enemies
 				{
 					if (transform.localScale.x < 1)
 					{
-						dmgValue = -dmgValue;
+						dmgValue *= -1f;
 					}
 
 					collidersEnemies[i].gameObject.SendMessage("TakeDamage", dmgValue);
@@ -185,7 +185,7 @@ namespace Enemies
 				else if (collidersEnemies[i].gameObject.tag == "Player")
 				{
 					collidersEnemies[i].gameObject.GetComponent<CharacterController2D>()
-						.TakeDamage(2f, transform.position);
+						.TakeDamage(new AttackStats(2f), transform.position);
 				}
 			}
 

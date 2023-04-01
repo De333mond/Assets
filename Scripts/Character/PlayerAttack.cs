@@ -43,13 +43,13 @@ namespace Character
 			if (!canAttack || _player.Inventory.SpecialSlots[SlotType.Weapon] is null)
 				return;
 
-			float damage = _player.GetWeaponDamage();
+			AttackStats attackStats = _player.GetWeaponDamage();
 
 			Collider2D[] targets = Physics2D.OverlapCircleAll(attackCheck.position, _attackRange);
 			foreach (var target in targets)
 			{
 				if (target.transform.CompareTag("Enemy"))
-					target.GetComponent<Enemy>().TakeDamage(damage);
+					target.GetComponent<Enemy>().TakeDamage(attackStats);
 			}
 			
 			canAttack = false;

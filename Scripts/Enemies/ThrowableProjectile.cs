@@ -21,7 +21,7 @@ namespace Enemies
 		{
 			if (collision.gameObject.tag == "Player")
 			{
-				collision.gameObject.GetComponent<CharacterController2D>().TakeDamage(2f, transform.position);
+				collision.gameObject.GetComponent<CharacterController2D>().TakeDamage(new AttackStats(2), transform.position);
 				Destroy(gameObject);
 			}
 			else if (owner != null && collision.gameObject != owner && collision.gameObject.tag == "Enemy")

@@ -90,7 +90,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &1289930609865869979
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,7 +107,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &1289930609865869983
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -118,6 +119,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -146,7 +166,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732cd96a31775224596014812a803468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  attackStats:
+    physicalDamage: 1
+    fireDamage: 1
+    waterDamage: 1
+    airDamage: 1
+    earthDamage: 1
+    criticalChance: 0
+    criticalMultiply: 1
   explosionCooldown: 0.2
   explosionRange: 3.7
   _exploisionSound: {fileID: 8300000, guid: ac9bb665296e4e0489b7a214d6d01773, type: 3}

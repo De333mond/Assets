@@ -6,12 +6,11 @@ namespace PlayerInventory.Scriptable
     [CreateAssetMenu(menuName = "Items/Specials/Weapon", fileName = "New item")]
     public class Weapon : SpecialItem
     {
-        [SerializeField] private float _attackRange;
-        public float AttackRange => _attackRange;
+        [field : SerializeField] public AttackStats MainAttackStats { get; private set; }
         
         public override string Info()
         {
-            return base.Info() + $"Attack range: {_attackRange}\n";
+            return base.Info() + $"Attack range: {MainAttackStats.attackRange}\n";
         }
     }
 }

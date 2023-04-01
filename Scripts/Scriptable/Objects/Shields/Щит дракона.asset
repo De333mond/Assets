@@ -32,10 +32,22 @@ MonoBehaviour:
     MaxHealth: 0
     Mana: 0
     MaxMana: 0
-    BaseDamage: 2
-    Armor: 50
-    CriticalChance: 0
-    CriticalMultiply: 0.2
-    AttackSpeed: 0
+    attackStats:
+      physicalDamage: 0
+      fireDamage: 0
+      waterDamage: 0
+      airDamage: 0
+      earthDamage: 0
+      criticalChance: 0
+      criticalMultiply: 0
+      attackSpeed: 0
+    resistStats:
+      resistReduceCup: 0
+      fullResistAmount: 0
+      physicalResistance: 10
+      fireResistance: 0
+      waterResistance: 0
+      airResistance: 10
+      earthResistance: 0
     WalkSpeed: 0
     IsInvincible: 0

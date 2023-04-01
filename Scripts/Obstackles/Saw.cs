@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class Saw : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] private AttackStats attackStats;
     [SerializeField] private float riseSpeed;
     [SerializeField] private float timeOffset;
     [SerializeField] private bool riseable;
@@ -60,7 +60,7 @@ public class Saw : MonoBehaviour
         {
             _onCooldown = true;
             _player = _player ? _player : col.gameObject.GetComponent<CharacterController2D>();
-            _player.TakeDamage(damage, transform.position);
+            _player.TakeDamage(attackStats, transform.position);
             StartCoroutine(resetCooldown());
         }
     }

@@ -311,12 +311,12 @@ namespace Character
 			transform.localScale = theScale;
 		}
 
-		public void TakeDamage(float damage, Vector3 position)
+		public void TakeDamage(AttackStats attackStats, Vector3 position)
 		{
 			if (!_player.Invincible)
 			{
 				animator.SetBool("Hit", true);
-				_player.TakeDamage(damage);
+				_player.TakeDamage(attackStats);
 				
 				Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f;
 				m_Rigidbody2D.velocity = Vector2.zero;

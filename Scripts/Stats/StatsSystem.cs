@@ -10,37 +10,24 @@ namespace Stats
     public class StatsSystem
     {
         public Stats Stats;
-
-        [SerializeField] private float ArmorReduceCup = 0.8f; // 80% 
-        [SerializeField] private float FullResistArmorAmount = 1000f;
-
         [HideInInspector] public UnityEvent OnDeath;
         [HideInInspector] public UnityEvent OnStatsChanged;
 
         private Animator _animator;
-
-        public float ArmorReduceMultiplier
-        {
-            get
-            {
-                float multiplier = 1 - Stats.Armor / FullResistArmorAmount;
-                return 1 - multiplier > ArmorReduceCup ? 1 - ArmorReduceCup : multiplier;
-            }
-        }
-
+        
         public void Init()
         {
             Stats.Health = Stats.MaxHealth;
             OnStatsChanged = new UnityEvent();
         }
 
-        public float GetDamageWithWeapon(SpecialItem weapon)
+        public AttackStats GetDamageWithWeapon(Weapon weapon)
         {
-            float damage = Stats.BaseDamage + weapon.Stats.BaseDamage;
-            if (Random.value < (Stats.CriticalChance + weapon.Stats.CriticalChance))
-                damage *= (Stats.CriticalMultiply + weapon.Stats.CriticalMultiply);
+            AttackStats attackStats = Stats.attackStats + weapon.MainAttackStats;
+            if (Random.value < (Stats.attackStats.criticalChance + weapon.MainAttackStats.criticalChance))
+                attackStats *= Stats.attackStats.criticalMultiply + weapon.MainAttackStats.criticalMultiply;
 
-            return damage;
+            return attackStats;
         }
 
         public void Heal(float value)
@@ -48,27 +35,25 @@ namespace Stats
             Stats.Health = Mathf.Min(Stats.Health + value, Stats.MaxHealth);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(AttackStats attackStats)
         {
             if (Stats.IsInvincible)
                 return;
 
-            damage *= ArmorReduceMultiplier;
-            Stats.Health -= damage;
+            float damageMagnitude = attackStats * Stats.resistStats;
+            Stats.Health -= damageMagnitude;
             if (Stats.Health < 0)
                 OnDeath.Invoke();
 
-            Debug.Log($"[Stats system]: total taken damage: {damage}");
+            Debug.Log($"[Stats system]: total taken damage: {damageMagnitude}");
         }
 
-        public float GetDamage()
+        public AttackStats GetDamage()
         {
-            float criticalDamage =
-                Stats.BaseDamage * (Random.value <= Stats.CriticalChance ? Stats.CriticalMultiply : 1);
-            return criticalDamage;
+            AttackStats criticalAttackStats =
+                Stats.attackStats * (Random.value <= Stats.attackStats.criticalChance ? Stats.attackStats.criticalMultiply : 1);
+            return criticalAttackStats;
         }
-
-        
     }
 
     [Serializable]
@@ -78,11 +63,11 @@ namespace Stats
         public float MaxHealth;
         [HideInInspector] public float Mana;
         public float MaxMana;
-        public float BaseDamage;
-        public float Armor;
-        public float CriticalChance;
-        public float CriticalMultiply;
-        public float AttackSpeed;
+        
+        public AttackStats attackStats;
+        public ResistStats resistStats;
+        [Space]
+        
         public float WalkSpeed;
 
         public bool IsInvincible;
@@ -104,11 +89,8 @@ namespace Stats
         {
             a.MaxHealth += b.MaxHealth;
             a.MaxMana += b.MaxMana;
-            a.BaseDamage += b.BaseDamage;
-            a.Armor += b.Armor;
-            a.CriticalChance += b.CriticalChance;
-            a.CriticalMultiply += b.CriticalMultiply;
-            a.AttackSpeed += b.AttackSpeed;
+            a.attackStats += b.attackStats;
+            a.resistStats += b.resistStats;
             a.WalkSpeed += b.WalkSpeed;
             return a;
         }
@@ -117,11 +99,8 @@ namespace Stats
         {
             a.MaxHealth -= b.MaxHealth;
             a.MaxMana -= b.MaxMana;
-            a.BaseDamage -= b.BaseDamage;
-            a.Armor -= b.Armor;
-            a.CriticalChance -= b.CriticalChance;
-            a.CriticalMultiply -= b.CriticalMultiply;
-            a.AttackSpeed -= b.AttackSpeed;
+            a.attackStats -= b.attackStats;
+            a.resistStats -= b.resistStats;
             a.WalkSpeed -= b.WalkSpeed;
             return a;
         }
@@ -133,14 +112,14 @@ namespace Stats
                 result += $"MaxHealth: +{MaxHealth}\n"; 
             if (MaxMana > 0)
                 result += $"MaxMana: +{MaxMana}\n";
-            if (BaseDamage > 0)
-                result += $"BaseDamage: +{BaseDamage}\n";
-            if (Armor > 0)
-                result += $"Armor: +{Armor}\n";
-            if (CriticalChance > 0)
-                result += $"Critical Chance: +{CriticalChance * 100}%\n";
-            if (CriticalMultiply > 0)
-                result += $"Critical Multiplier: +{CriticalMultiply * 100}%\n";
+            if (attackStats.Magnitude > 0)
+                result += $"BaseDamage: +{attackStats.Magnitude}\n";
+            if (resistStats.Magnitude > 0)
+                result += $"Resistance magnitude: +{resistStats.Magnitude}\n";
+            if (attackStats.criticalChance > 0)
+                result += $"Critical Chance: +{attackStats.criticalChance * 100}%\n";
+            if (attackStats.criticalMultiply > 0)
+                result += $"Critical Multiplier: +{attackStats.criticalMultiply * 100}%\n";
             if (WalkSpeed > 0)
                 result += $"Walk Speed: +{WalkSpeed}\n";
             return result;

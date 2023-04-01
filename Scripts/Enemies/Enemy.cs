@@ -130,17 +130,18 @@ public class Enemy : MonoBehaviour
         _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         _attacking = true;
         _animator.SetTrigger("Attack");
-        StartCoroutine(ResetAttackFlag(_attackCooldown / _statsSystem.Stats.AttackSpeed));
+        StartCoroutine(ResetAttackFlag(_attackCooldown / _statsSystem.Stats.attackStats.attackSpeed));
         
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(AttackStats attackStats)
     {
-        _statsSystem.TakeDamage(damage);
+        _statsSystem.TakeDamage(attackStats);
+        Debug.Log(_statsSystem.Stats.Health);
         _animator.SetTrigger("Hurt");
         StartCoroutine(Stun());
 
-        if (_statsSystem.Stats.Health < 0)
+        if (_statsSystem.Stats.Health <= 0)
         {
             StartCoroutine(Die());
         }
