@@ -172,8 +172,25 @@ MonoBehaviour:
     waterDamage: 1
     airDamage: 1
     earthDamage: 1
+    electricityDamage: 0
+    poisonDamage: 0
     criticalChance: 0
     criticalMultiply: 1
+    attackSpeed: 1
+    attackRange: 1
+    statusEffects:
+      fireStatusEffect:
+        Chance: 0
+        Duration: 0
+      frozenStatusEffect:
+        Chance: 0
+        Duration: 0
+      electricityStatusEffect:
+        Chance: 0
+        Duration: 0
+      poisonStatusEffect:
+        Chance: 0
+        Duration: 0
   explosionCooldown: 0.2
   explosionRange: 3.7
   _exploisionSound: {fileID: 8300000, guid: ac9bb665296e4e0489b7a214d6d01773, type: 3}

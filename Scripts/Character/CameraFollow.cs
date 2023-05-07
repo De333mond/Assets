@@ -39,6 +39,8 @@ namespace Character
 
 		private void Update()
 		{
+			if(Target == null) return;
+			
 			transform.position = Vector3.Slerp(transform.position, Target.position + _PositionOffset, FollowSpeed * Time.deltaTime);
 
 			if (shakeDuration > 0)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Character;
 using UnityEngine;
+using UniversalStatsSystem;
 
 namespace Enemies
 {
@@ -184,7 +185,7 @@ namespace Enemies
 				}
 				else if (collidersEnemies[i].gameObject.tag == "Player")
 				{
-					collidersEnemies[i].gameObject.GetComponent<CharacterController2D>()
+					collidersEnemies[i].gameObject.GetComponent<Player>()
 						.TakeDamage(new AttackStats(2f), transform.position);
 				}
 			}

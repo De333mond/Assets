@@ -147,6 +147,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53331dea07974539a6b6cb4cfdd154e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StatsSystem>k__BackingField:
+    mainStats:
+      Health: 0
+      MaxHealth: 100
+      Mana: 0
+      MaxMana: 0
+      WalkSpeed: 0
+    attackStats:
+      physicalDamage: 0
+      fireDamage: 0
+      waterDamage: 0
+      airDamage: 0
+      earthDamage: 0
+      electricityDamage: 0
+      poisonDamage: 0
+      criticalChance: 0
+      criticalMultiply: 0
+      attackSpeed: 0
+      attackRange: 0
+      statusEffects:
+        fireStatusEffect:
+          Chance: 0
+          Duration: 0
+        frozenStatusEffect:
+          Chance: 0
+          Duration: 0
+        electricityStatusEffect:
+          Chance: 0
+          Duration: 0
+        poisonStatusEffect:
+          Chance: 0
+          Duration: 0
+    resistStats:
+      resistReduceCup: 0.8
+      fullResistAmount: 1000
+      physicalResistance: 0
+      fireResistance: 0
+      waterResistance: 0
+      airResistance: 0
+      earthResistance: 0
+      electricityResistance: 0
+      poisonResistance: 0
+    isInvincible: 0
+    OnDeath:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStatsChanged:
+      m_PersistentCalls:
+        m_Calls: []
   m_JumpForce: 18
   _gravityForce: -9.8
   _gravityScale: 3
@@ -163,41 +212,7 @@ MonoBehaviour:
   particleJumpUp: {fileID: 6726239572808547132}
   particleJumpDown: {fileID: 6726239573186958885}
   runSpeed: 40
-  <StatsSystem>k__BackingField:
-    Stats:
-      Health: 0
-      MaxHealth: 50
-      Mana: 0
-      MaxMana: 0
-      attackStats:
-        physicalDamage: 0
-        fireDamage: 0
-        waterDamage: 0
-        airDamage: 0
-        earthDamage: 0
-        criticalChance: 0
-        criticalMultiply: 1
-      resistStats:
-        resistReduceCup: 0.8
-        fullResistAmount: 1000
-        physicalResistance: 0
-        fireResistance: 0
-        waterResistance: 0
-        airResistance: 0
-        earthResistance: 0
-      CriticalChance: 0
-      CriticalMultiply: 0
-      AttackSpeed: 0
-      WalkSpeed: 0
-      IsInvincible: 0
-    OnDeath:
-      m_PersistentCalls:
-        m_Calls: []
-    OnStatsChanged:
-      m_PersistentCalls:
-        m_Calls: []
   playerAttack:
-    _attackRange: 1
     throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
     attackCheck: {fileID: 3334392600808307971}
     animator: {fileID: 5590450716771236277}

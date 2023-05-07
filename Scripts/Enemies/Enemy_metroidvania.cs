@@ -1,6 +1,7 @@
 using System.Collections;
 using Character;
 using UnityEngine;
+using UniversalStatsSystem;
 
 namespace Enemies
 {
@@ -92,7 +93,7 @@ namespace Enemies
 		{
 			if (collision.gameObject.tag == "Player" && life > 0)
 			{
-				collision.gameObject.GetComponent<Player>().TakeDamage(new AttackStats(2));
+				collision.gameObject.GetComponent<Player>().TakeDamage(new AttackStats(2), transform.position);
 			}
 		}
 

@@ -24,27 +24,44 @@ MonoBehaviour:
   sprite: {fileID: -1176408710, guid: 94e8c04738fe07f42ab5d74b27bb52c3, type: 3}
   type: 4
   Rarity: 0
-  Stats:
+  <MainStats>k__BackingField:
     Health: 0
     MaxHealth: 0
     Mana: 0
     MaxMana: 0
-    attackStats:
-      physicalDamage: 2
-      fireDamage: 0
-      waterDamage: 0
-      airDamage: 0
-      earthDamage: 2
-      criticalChance: 0
-      criticalMultiply: 0
-      attackSpeed: 0
-    resistStats:
-      resistReduceCup: 0
-      fullResistAmount: 0
-      physicalResistance: 0
-      fireResistance: 0
-      waterResistance: 0
-      airResistance: 0
-      earthResistance: 0
     WalkSpeed: 0
-    IsInvincible: 0
+  <AttackStats>k__BackingField:
+    physicalDamage: 0
+    fireDamage: 10
+    waterDamage: 0
+    airDamage: 0
+    earthDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    criticalChance: 0
+    criticalMultiply: 0
+    attackSpeed: 0
+    attackRange: 0
+    statusEffects:
+      fireStatusEffect:
+        Chance: 0
+        Duration: 0
+      frozenStatusEffect:
+        Chance: 0
+        Duration: 0
+      electricityStatusEffect:
+        Chance: 0
+        Duration: 0
+      poisonStatusEffect:
+        Chance: 0
+        Duration: 0
+  <ResistStats>k__BackingField:
+    resistReduceCup: 0
+    fullResistAmount: 0
+    physicalResistance: 0
+    fireResistance: 0
+    waterResistance: 0
+    airResistance: 0
+    earthResistance: 0
+    electricityResistance: 0
+    poisonResistance: 0

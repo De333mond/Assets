@@ -24,14 +24,14 @@ namespace UI
 
         private void UpdateStatsPanel()
         {
-            var stats = Player.Instance.StatsSystem.Stats;
-            health.text = $"Здоровье: {stats.Health}/{stats.MaxHealth}";
-            mana.text = $"Мана: {stats.Mana}/{stats.MaxMana}";
-            armor.text = $"Магнитуда сопротивлений: {stats.resistStats.Magnitude}";
-            baseDamage.text = $"Физический урон: {stats.attackStats}";
-            critChance.text = $"Шанс крита: {stats.attackStats.criticalChance * 100}%";
-            CritMulty.text = $"Множитель крита: {stats.attackStats.criticalMultiply * 100}%";
-            attackSpeed.text = $"Скорость атаки: {stats.attackStats.attackSpeed * 100}%";
+            var StatsSystem = Player.Instance.StatsSystem;
+            health.text = $"Здоровье: {StatsSystem.MainStats.Health}/{StatsSystem.MainStats.MaxHealth}";
+            mana.text = $"Мана: {StatsSystem.MainStats.Mana}/{StatsSystem.MainStats.MaxMana}";
+            armor.text = $"Магнитуда сопротивлений: {StatsSystem.ResistStats.Magnitude}";
+            baseDamage.text = $"Физический урон: {StatsSystem.AttackStats}";
+            critChance.text = $"Шанс крита: {StatsSystem.AttackStats.criticalChance * 100}%";
+            CritMulty.text = $"Множитель крита: {StatsSystem.AttackStats.criticalMultiply * 100}%";
+            attackSpeed.text = $"Скорость атаки: {StatsSystem.AttackStats.attackCooldown * 100}%";
         }
     }
 }

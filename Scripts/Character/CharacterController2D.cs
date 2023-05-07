@@ -10,7 +10,7 @@ namespace Character
 		
 	}
 	
-	public class CharacterController2D : MonoBehaviour
+	public class CharacterController2D : CharacterBase
 	{
 		[Header("CharacterController2D")] [Space]
 
@@ -67,26 +67,13 @@ namespace Character
 
 		private Player _player;
 		
-		private void Awake()
+		protected override void OnAwake()
 		{
+			base.OnAwake();
+			
 			if (gameObject.layer == m_WhatIsGround)
 				Debug.Log("Attention!: player layer == ground layer");
-
-			OnAwake();
-		}
-
-		private void Update()
-		{
-			OnUpdate();
-		}
-		
-		private void FixedUpdate()
-		{
-			OnFixedUpdate();
-		}
-		
-		protected virtual void OnAwake()
-		{
+			
 			if (!m_Rigidbody2D)
 				m_Rigidbody2D = GetComponent<Rigidbody2D>();
 			
@@ -102,9 +89,8 @@ namespace Character
 			_player = GetComponent<Player>();
 		}
 
-		protected virtual void OnUpdate() { }
 		
-		protected virtual void OnFixedUpdate()
+		protected override void OnFixedUpdate()
 		{
 			GroundCheck();
 			WallsAndFallCheck();
@@ -311,20 +297,16 @@ namespace Character
 			transform.localScale = theScale;
 		}
 
-		public void TakeDamage(AttackStats attackStats, Vector3 position)
+		protected void TakeDamage(Vector3 position)
 		{
-			if (!_player.Invincible)
-			{
-				animator.SetBool("Hit", true);
-				_player.TakeDamage(attackStats);
+			animator.SetBool("Hit", true);
 				
-				Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f;
-				m_Rigidbody2D.velocity = Vector2.zero;
-				m_Rigidbody2D.AddForce(damageDir * 10);
+			Vector2 damageDir = Vector3.Normalize(transform.position - position) * 40f;
+			m_Rigidbody2D.velocity = Vector2.zero;
+			m_Rigidbody2D.AddForce(damageDir * 10);
 			
-				StartCoroutine(Stun(0.25f));
-				StartCoroutine(MakeInvincible(1f));
-			}
+			StartCoroutine(Stun(0.25f));
+			StartCoroutine(MakeInvincible(1f));
 		}
 
 		IEnumerator DashCooldown()
@@ -347,9 +329,9 @@ namespace Character
 
 		IEnumerator MakeInvincible(float time)
 		{
-			_player.Invincible = true;
+			Invincible = true;
 			yield return new WaitForSeconds(time);
-			_player.Invincible = false;
+			Invincible = false;
 		}
 
 		IEnumerator WaitToMove(float time)
@@ -377,15 +359,16 @@ namespace Character
 				new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
 		}
 
-		IEnumerator WaitToDead()
+		protected IEnumerator WaitToDead()
 		{
 			animator.SetBool("IsDead", true);
 			canMove = false;
-			_player.Invincible = true;
+			Invincible = true;
 			_player.CanAttack = false;
 			yield return new WaitForSeconds(0.4f);
 			m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
 			yield return new WaitForSeconds(1.1f);
+			Destroy(gameObject);
 			// SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 		}
 

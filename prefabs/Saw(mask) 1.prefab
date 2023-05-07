@@ -240,12 +240,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c11861d37565b7449b1577e3418886ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
-    physicalDamage: 1
+  attackStats:
+    physicalDamage: 5
     fireDamage: 0
     waterDamage: 0
     airDamage: 0
     earthDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    criticalChance: 0
+    criticalMultiply: 0
+    attackSpeed: 0
+    attackRange: 0
+    statusEffects:
+      fireStatusEffect:
+        Chance: 0
+        Duration: 0
+      frozenStatusEffect:
+        Chance: 0
+        Duration: 0
+      electricityStatusEffect:
+        Chance: 0
+        Duration: 0
+      poisonStatusEffect:
+        Chance: 0
+        Duration: 0
   riseSpeed: 1
   timeOffset: 0
   riseable: 1

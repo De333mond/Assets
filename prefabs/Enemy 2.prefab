@@ -67,7 +67,7 @@ Transform:
   - {fileID: 382606479749978075}
   - {fileID: 382606478015582357}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &382606478250803175
 MonoBehaviour:
@@ -78,26 +78,67 @@ MonoBehaviour:
   m_GameObject: {fileID: 382606478250803172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 586f2b3eab448ef4b94a5b27ddc17916, type: 3}
+  m_Script: {fileID: 11500000, guid: fba604f8fb16ce24abb8275c4ac53990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  _healthBar: {fileID: 0}
-  _animator: {fileID: 382606479749978077}
-  _name: Enemy
-  DeathEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  _movespeed: 3
-  _patrolRange: {x: 12.53, y: 6.8}
+  <StatsSystem>k__BackingField:
+    mainStats:
+      Health: 0
+      MaxHealth: 100
+      Mana: 0
+      MaxMana: 0
+      WalkSpeed: 5
+    attackStats:
+      physicalDamage: 0
+      fireDamage: 0
+      waterDamage: 0
+      airDamage: 0
+      earthDamage: 0
+      electricityDamage: 0
+      poisonDamage: 0
+      criticalChance: 0
+      criticalMultiply: 0
+      attackCooldown: 0
+      attackRange: 0
+      statusEffects:
+        fireStatusEffect:
+          Chance: 0
+          Duration: 0
+        frozenStatusEffect:
+          Chance: 0
+          Duration: 0
+        electricityStatusEffect:
+          Chance: 0
+          Duration: 0
+        poisonStatusEffect:
+          Chance: 0
+          Duration: 0
+    resistStats:
+      resistReduceCup: 0.8
+      fullResistAmount: 1000
+      physicalResistance: 0
+      fireResistance: 0
+      waterResistance: 0
+      airResistance: 0
+      earthResistance: 0
+      electricityResistance: 0
+      poisonResistance: 0
+    isInvincible: 0
+    OnDeath:
+      m_PersistentCalls:
+        m_Calls: []
+    OnStatsChanged:
+      m_PersistentCalls:
+        m_Calls: []
+  _patrolRange: {x: 18, y: 6}
   _stayCooldown: 2
-  _damage: 2
-  _attackRange: 1.18
-  _attackCooldown: 0.5
+  _attackRange: 2
+  _attackCooldown: 2
   _attackPoint: {fileID: 382606478015582357}
   _target: {fileID: 0}
   walk: {fileID: 8300000, guid: 054c856b7f97a5340943a4be85c78e9d, type: 3}
-  attack: {fileID: 8300000, guid: 8f1aac8bd588ba4409b407b9abdcd563, type: 3}
+  attack: {fileID: 8300000, guid: bcba368ab9a12bc458aec56e9cbbfe57, type: 3}
+  _animator: {fileID: 382606479749978077}
 --- !u!114 &382606478250803099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropPositionOffset: {x: 0, y: 0, z: 0}
   _collectablePrefab: {fileID: 0}
-  _droppedItemsParent: {fileID: 6422088307482987706, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
   _DropSet:
-    _dropAmount: 0
-    droplist: []
+    _randomDropAmount: 0
+    randomDropList: []
+    constantDropList: []
 --- !u!50 &382606478250803174
 Rigidbody2D:
   serializedVersion: 4
@@ -379,3 +420,4 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

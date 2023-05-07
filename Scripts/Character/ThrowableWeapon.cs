@@ -1,23 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UniversalStatsSystem;
 
 namespace Character
 { 
 	public class ThrowableWeapon : MonoBehaviour
 	{
+		[field : SerializeField] public AttackStats AttackStats { get; private set; }
+		
 		public Vector2 direction;
 		public bool hasHit = false;
 		public float speed = 10f;
 
-		// Start is called before the first frame update
-		void Start()
-		{
-
-		}
-
-		// Update is called once per frame
 		void FixedUpdate()
 		{
 			if (!hasHit)
@@ -28,7 +24,7 @@ namespace Character
 		{
 			if (collision.gameObject.tag == "Enemy")
 			{
-				collision.gameObject.SendMessage("TakeDamage", Mathf.Sign(direction.x) * 2f);
+				collision.gameObject.GetComponent<Enemy>().TakeDamage(AttackStats);
 				Destroy(gameObject);
 			}
 			else if (collision.gameObject.tag != "Player")

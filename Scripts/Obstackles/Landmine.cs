@@ -1,10 +1,10 @@
 using System.Collections;
 using Character;
 using UnityEngine;
+using UniversalStatsSystem;
 
 public class Landmine : MonoBehaviour
 {
-
     [SerializeField] private AttackStats attackStats = new AttackStats(10);
     [SerializeField] private float explosionCooldown = .2f;
     [SerializeField] private float explosionRange;
@@ -12,7 +12,7 @@ public class Landmine : MonoBehaviour
     
     private Animator _animator;
     private AudioSource source;
-    private CharacterController2D _player;
+    private Player _player;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class Landmine : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _player = other.gameObject.GetComponent<CharacterController2D>();
+            _player = other.gameObject.GetComponent<Player>();
             StartCoroutine(Explode());
         }
     }

@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using PlayerInventory.Scriptable;
 using UnityEngine;
+using UniversalStatsSystem;
 
 namespace Character
 { 
 	[System.Serializable]
 	public class PlayerAttack
 	{
-		// public float dmgValue = 4;
-		[SerializeField] private float _attackRange = 1f;
-		
 		public GameObject throwableObject;
 		public Transform attackCheck;
 		public Animator animator;
@@ -43,9 +41,9 @@ namespace Character
 			if (!canAttack || _player.Inventory.SpecialSlots[SlotType.Weapon] is null)
 				return;
 
-			AttackStats attackStats = _player.GetWeaponDamage();
+			AttackStats attackStats = _player.StatsSystem.GetDamage();
 
-			Collider2D[] targets = Physics2D.OverlapCircleAll(attackCheck.position, _attackRange);
+			Collider2D[] targets = Physics2D.OverlapCircleAll(attackCheck.position, attackStats.attackRange);
 			foreach (var target in targets)
 			{
 				if (target.transform.CompareTag("Enemy"))

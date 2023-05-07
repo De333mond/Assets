@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using Character;
 using UnityEngine;
-using Stats;
+using UniversalStatsSystem;
  
 
 [RequireComponent(typeof(ItemDropper))]
-public class Enemy : MonoBehaviour
+public class Enemy : CharacterBase
 {
     //TODO fix attack mechanic because too hard to kill without take damage 
     
@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _stayCooldown;
     [Header("Attack")]
     
-    [SerializeField] private StatsSystem _statsSystem;
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackCooldown;
     [SerializeField] private Transform _attackPoint;
@@ -37,8 +36,10 @@ public class Enemy : MonoBehaviour
     private bool _following, _attacking;
     private float direction = 1f;
     
-    void Start()
+    protected override void OnStart()
     {
+        base.OnStart();
+        
         _startPosition = transform.position;
         _rigidbody = GetComponent<Rigidbody2D>();
         _itemDropper = GetComponent<ItemDropper>();
@@ -46,20 +47,35 @@ public class Enemy : MonoBehaviour
         _isAlive = _canMove = true;
         _source = GetComponent<AudioSource>();
         _source.playOnAwake = false;
-        _statsSystem.Init();
+        StatsSystem.Init();
+
+        StatusEffectSystem.OnFrozenStatusStart += FrozenStatus;
+        StatusEffectSystem.OnFrozenStatusEnd += UnFrozenStatus;
     }
 
-    
-    
-
-    void FixedUpdate()
+    private bool _frozen = false;
+    private void FrozenStatus()
     {
-        if (_isAlive && _canMove)
+        _frozen = true;
+        _animator.SetFloat("velocity", 0);
+    }
+    private void UnFrozenStatus()
+    {
+        _frozen = false;
+    }
+
+    protected override void OnFixedUpdate()
+    {
+        base.OnFixedUpdate();
+        
+        if (_isAlive && _canMove && !_frozen)
             Move();
     }
 
     private void Move()
     {
+        if(_target == null) return;
+        
         float distanceToTarget = Vector2.Distance(_target.position, transform.position);
         if (distanceToTarget < _patrolRange.x / 2 || _following)
         {
@@ -97,7 +113,7 @@ public class Enemy : MonoBehaviour
         }
 
         
-        _animator.SetFloat("velocity", Math.Abs(_rigidbody.velocity.x / _statsSystem.Stats.WalkSpeed));
+        _animator.SetFloat("velocity", Math.Abs(_rigidbody.velocity.x / StatsSystem.MainStats.WalkSpeed));
     }
 
     private void Patrol()
@@ -112,16 +128,16 @@ public class Enemy : MonoBehaviour
             StartCoroutine(ResetStayState(_stayCooldown));
         }
 
-        _rigidbody.velocity = new Vector2(_statsSystem.Stats.WalkSpeed * direction, _rigidbody.velocity.y);
+        _rigidbody.velocity = new Vector2(StatsSystem.MainStats.WalkSpeed * direction, _rigidbody.velocity.y);
     }
 
     
     private void Follow()
     {
         if (transform.position.x > _target.position.x)
-            _rigidbody.velocity = new Vector2(-_statsSystem.Stats.WalkSpeed, _rigidbody.velocity.y);
+            _rigidbody.velocity = new Vector2(-StatsSystem.MainStats.WalkSpeed, _rigidbody.velocity.y);
         else
-            _rigidbody.velocity = new Vector2(_statsSystem.Stats.WalkSpeed, _rigidbody.velocity.y);
+            _rigidbody.velocity = new Vector2(StatsSystem.MainStats.WalkSpeed, _rigidbody.velocity.y);
     }
 
     private void Attack()
@@ -130,18 +146,20 @@ public class Enemy : MonoBehaviour
         _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         _attacking = true;
         _animator.SetTrigger("Attack");
-        StartCoroutine(ResetAttackFlag(_attackCooldown / _statsSystem.Stats.attackStats.attackSpeed));
+        StartCoroutine(ResetAttackFlag(_attackCooldown / StatsSystem.AttackStats.attackCooldown));
         
     }
 
-    public void TakeDamage(AttackStats attackStats)
+    public override void TakeDamage(AttackStats attackStats)
     {
-        _statsSystem.TakeDamage(attackStats);
-        Debug.Log(_statsSystem.Stats.Health);
+        base.TakeDamage(attackStats);
+        
+        StatsSystem.TakeDamage(attackStats);
+        Debug.Log(StatsSystem.MainStats.Health);
         _animator.SetTrigger("Hurt");
         StartCoroutine(Stun());
 
-        if (_statsSystem.Stats.Health <= 0)
+        if (StatsSystem.MainStats.Health <= 0)
         {
             StartCoroutine(Die());
         }
@@ -171,8 +189,8 @@ public class Enemy : MonoBehaviour
         {
             if (target.CompareTag("Player"))
             {
-                var player = target.GetComponent<CharacterController2D>();
-                player.TakeDamage(_statsSystem.GetDamage(), transform.position);
+                var player = target.GetComponent<Player>();
+                player.TakeDamage(StatsSystem.GetDamage(), transform.position);
             }
         }
   
@@ -191,5 +209,6 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.DrawWireCube(transform.position, _patrolRange);
         Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
+        Gizmos.DrawWireSphere(Position, 5f);//electricity status effect radius
     }
 }

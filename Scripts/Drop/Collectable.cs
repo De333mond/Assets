@@ -48,8 +48,8 @@ public class Collectable : MonoBehaviour
 
     private void Update()
     {
-        if (_vfx)
-            _vfx.SetFloat("Alpha", _sprite.color.a);
+        // if (_vfx)
+        //     _vfx.SetFloat("Alpha", _sprite.color.a);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

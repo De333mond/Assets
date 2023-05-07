@@ -87,21 +87,20 @@ namespace PlayerInventory
         {
             if (SpecialSlots[slotType] != null)
             {
-                Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.Stats);
+                Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.MainStats, SpecialSlots[slotType]!.AttackStats, SpecialSlots[slotType]!.ResistStats);
             }
                 
             (_bagItems[indexFrom], SpecialSlots[slotType]) = (SpecialSlots[slotType], _bagItems[indexFrom] as SpecialItem);
-            Player.Instance.ApplyItemStats(SpecialSlots[slotType]!.Stats);
+            Player.Instance.ApplyItemStats(SpecialSlots[slotType]!.MainStats, SpecialSlots[slotType]!.AttackStats, SpecialSlots[slotType]!.ResistStats);
         }
 
         public void RemoveSpecial(int indexTo, SlotType slotType)
         {
             if (SpecialSlots[slotType] != null)
             {
-                Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.Stats);
+                Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.MainStats, SpecialSlots[slotType]!.AttackStats, SpecialSlots[slotType]!.ResistStats);
             }
             
-            Player.Instance.RemoveItemStats(SpecialSlots[slotType]!.Stats);
             (_bagItems[indexTo], SpecialSlots[slotType]) = (SpecialSlots[slotType], _bagItems[indexTo] as SpecialItem);
         }
 

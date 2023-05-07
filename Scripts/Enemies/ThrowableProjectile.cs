@@ -1,5 +1,6 @@
 ﻿using Character;
 using UnityEngine;
+using UniversalStatsSystem;
 
 namespace Enemies
 {
@@ -21,7 +22,7 @@ namespace Enemies
 		{
 			if (collision.gameObject.tag == "Player")
 			{
-				collision.gameObject.GetComponent<CharacterController2D>().TakeDamage(new AttackStats(2), transform.position);
+				collision.gameObject.GetComponent<Player>().TakeDamage(new AttackStats(2), transform.position);
 				Destroy(gameObject);
 			}
 			else if (owner != null && collision.gameObject != owner && collision.gameObject.tag == "Enemy")
