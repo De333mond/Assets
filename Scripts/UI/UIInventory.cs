@@ -54,6 +54,10 @@ namespace UI
         public void ToggleBagDisplay()
         {
             _isActive = !_isActive;
+
+            if (!_isActive)
+                InfoPanel.Hide();
+            
             gameObject.SetActive(_isActive);
         }
         
