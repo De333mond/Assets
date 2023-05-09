@@ -76,47 +76,34 @@ namespace UniversalStatsSystem
         public static float operator *(AttackStats attackStats, ResistStats resistStats)
         {
             float multiplier = 1;
+            
             multiplier = 1 - resistStats.physicalResistance / resistStats.fullResistAmount;
-            multiplier = ((1 - multiplier) > resistStats.resistReduceCup)
-                ? (1 - resistStats.resistReduceCup)
-                : multiplier;
-            float physicalDamage = attackStats.physicalDamage * multiplier;
+            multiplier = ((1 - multiplier) > resistStats.resistReduceCup) ? (1 - resistStats.resistReduceCup) : multiplier;
+            float physicalDamage = Mathf.Clamp(attackStats.physicalDamage, 0f, Mathf.Infinity) * multiplier;
 
             multiplier = 1 - resistStats.fireResistance / resistStats.fullResistAmount;
-            multiplier = ((1 - multiplier) > resistStats.resistReduceCup)
-                ? (1 - resistStats.resistReduceCup)
-                : multiplier;
-            float fireDamage = attackStats.fireDamage * multiplier;
+            multiplier = ((1 - multiplier) > resistStats.resistReduceCup) ? (1 - resistStats.resistReduceCup) : multiplier;
+            float fireDamage = Mathf.Clamp(attackStats.fireDamage, 0f, Mathf.Infinity) * multiplier;
 
             multiplier = 1 - resistStats.waterResistance / resistStats.fullResistAmount;
-            multiplier = ((1 - multiplier) > resistStats.resistReduceCup)
-                ? (1 - resistStats.resistReduceCup)
-                : multiplier;
-            float waterDamage = attackStats.waterDamage * multiplier;
+            multiplier = ((1 - multiplier) > resistStats.resistReduceCup) ? (1 - resistStats.resistReduceCup) : multiplier;
+            float waterDamage = Mathf.Clamp(attackStats.waterDamage, 0f, Mathf.Infinity) * multiplier;
 
             multiplier = 1 - resistStats.airResistance / resistStats.fullResistAmount;
-            multiplier = ((1 - multiplier) > resistStats.resistReduceCup)
-                ? (1 - resistStats.resistReduceCup)
-                : multiplier;
-            float airDamage = attackStats.airDamage * multiplier;
+            multiplier = ((1 - multiplier) > resistStats.resistReduceCup) ? (1 - resistStats.resistReduceCup) : multiplier;
+            float airDamage = Mathf.Clamp(attackStats.airDamage, 0f, Mathf.Infinity) * multiplier;
 
             multiplier = 1 - resistStats.earthResistance / resistStats.fullResistAmount;
-            multiplier = ((1 - multiplier) > resistStats.resistReduceCup)
-                ? (1 - resistStats.resistReduceCup)
-                : multiplier;
-            float earthDamage = attackStats.earthDamage * multiplier;
+            multiplier = ((1 - multiplier) > resistStats.resistReduceCup) ? (1 - resistStats.resistReduceCup) : multiplier;
+            float earthDamage = Mathf.Clamp(attackStats.earthDamage, 0f, Mathf.Infinity) * multiplier;
 
             multiplier = 1 - resistStats.electricityResistance / resistStats.fullResistAmount;
-            multiplier = ((1 - multiplier) > resistStats.resistReduceCup)
-                ? (1 - resistStats.resistReduceCup)
-                : multiplier;
-            float electricityDamage = attackStats.electricityDamage * multiplier;
+            multiplier = ((1 - multiplier) > resistStats.resistReduceCup) ? (1 - resistStats.resistReduceCup) : multiplier;
+            float electricityDamage = Mathf.Clamp(attackStats.electricityDamage, 0f, Mathf.Infinity) * multiplier;
 
             multiplier = 1 - resistStats.poisonResistance / resistStats.fullResistAmount;
-            multiplier = ((1 - multiplier) > resistStats.resistReduceCup)
-                ? (1 - resistStats.resistReduceCup)
-                : multiplier;
-            float poisonDamage = attackStats.poisonDamage * multiplier;
+            multiplier = ((1 - multiplier) > resistStats.resistReduceCup) ? (1 - resistStats.resistReduceCup) : multiplier;
+            float poisonDamage = Mathf.Clamp(attackStats.poisonDamage, 0f, Mathf.Infinity) * multiplier;
 
             return physicalDamage + fireDamage + waterDamage + airDamage + earthDamage + electricityDamage +
                    poisonDamage;
