@@ -7,8 +7,6 @@ namespace Character
 	{
 		[Header("PlayerMovement")] [Space]
 		
-		public float runSpeed = 40f;
-
 		private float horizontalMove = 0f;
 		private bool jump = false;
 		private bool dash = false;
@@ -69,7 +67,7 @@ namespace Character
 
 		public void Move(float direction)
 		{
-			horizontalMove = direction * runSpeed;
+			horizontalMove = direction * StatsSystem.MainStats.WalkSpeed;
 		}
 		
 		public void OnFall()
