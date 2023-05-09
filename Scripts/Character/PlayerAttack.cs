@@ -53,12 +53,12 @@ namespace Character
 			canAttack = false;
 			animator.SetBool("IsAttacking", true);
 			animator.SetInteger("numAttack", _attackVariantCycle++ % attacksCount);
-			_player.StartCoroutine(AttackCooldown());
+			_player.StartCoroutine(AttackCooldown(attackStats.attackCooldown));
 		}
 
-		IEnumerator AttackCooldown()
+		IEnumerator AttackCooldown(float attackCooldown)
 		{
-			yield return new WaitForSeconds(0.4f);
+			yield return new WaitForSeconds(attackCooldown);
 			canAttack = true;
 		}
 
