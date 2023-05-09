@@ -102,6 +102,9 @@ namespace PlayerInventory
             }
             
             (_bagItems[indexTo], SpecialSlots[slotType]) = (SpecialSlots[slotType], _bagItems[indexTo] as SpecialItem);
+            
+            if(SpecialSlots[slotType] != null)
+                Player.Instance.ApplyItemStats(SpecialSlots[slotType]!.MainStats, SpecialSlots[slotType]!.AttackStats, SpecialSlots[slotType]!.ResistStats);
         }
 
         public void SwapBagItems(int from, int to)

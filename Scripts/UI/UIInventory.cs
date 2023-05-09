@@ -63,21 +63,21 @@ namespace UI
         
         public void SwapItemsInInventory(UIInventorySlot from, UIInventorySlot to)
         {
-            if (!(to.IsSpecialSlot || from.IsSpecialSlot))
+            if (!(to.IsSpecialSlot || from.IsSpecialSlot))//переставляем в инвентаре
             {
                 Player.Instance.Inventory.SwapBagItems(_bagCells.IndexOf(from), _bagCells.IndexOf(to));
             }
             else
             {
-                if (from.IsSpecialSlot && to.IsSpecialSlot)
+                if (from.IsSpecialSlot && to.IsSpecialSlot)//переставляем в спец слотах
                 {
                     Player.Instance.Inventory.SwapSpecials(from.slotType, to.slotType);
                 }
-                else if (to.IsSpecialSlot)
+                else if (to.IsSpecialSlot)//переставляем из инвентаря в спец слот
                 {
                     Player.Instance.Inventory.ApplySpecial(_bagCells.IndexOf(from), to.slotType);   
                 }
-                else
+                else//переставляем из спец слота в инвентарь
                 {
                     Player.Instance.Inventory.RemoveSpecial(_bagCells.IndexOf(to), from.slotType);
                 }

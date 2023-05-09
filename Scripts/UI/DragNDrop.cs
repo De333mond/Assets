@@ -11,7 +11,7 @@ namespace UI
     {
         private UIInventorySlot _beginSlot, _endSlot;
         private UIInventory _uiInventory;
-        private Item _item;
+        private Item _beginSlotItem;
         private Image _imageHolder;
 
         private void Start()
@@ -32,13 +32,13 @@ namespace UI
                 UIInventorySlot slot = target.transform.parent.GetComponent<UIInventorySlot>();
                 if (slot) // in slot
                 {
-                    _item = slot.Item;
-                    if (!_item)
+                    _beginSlotItem = slot.Item;
+                    if (!_beginSlotItem)
                         return;
                             
                     _beginSlot = slot;
                     _imageHolder.enabled = true;
-                    _imageHolder.sprite = _item.sprite;
+                    _imageHolder.sprite = _beginSlotItem.sprite;
                     _imageHolder.rectTransform.position = Input.mousePosition;
                 }
             }
@@ -51,33 +51,48 @@ namespace UI
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (!_item)
+            if (!_beginSlotItem)
                 return;
+            
             GameObject target = eventData.pointerCurrentRaycast.gameObject;
             if (target)
             {
-                UIInventorySlot slot = target.transform.parent.GetComponent<UIInventorySlot>();
-                if (slot && slot.IsSuitableType(_item)) // in slot
+                UIInventorySlot targetSlot = target.transform.parent.GetComponent<UIInventorySlot>();
+                
+                if (targetSlot && _beginSlot != targetSlot && targetSlot.IsSuitableType(_beginSlotItem)) // in slot
                 {
-                    var endSlotItem = slot.Item;
-                    if (endSlotItem)
-                        _beginSlot.Item = endSlotItem;
-                    
-                    slot.Item = _item;
-                    _uiInventory.SwapItemsInInventory(_beginSlot, slot);
+                    Item targetSlotItem = targetSlot.Item;
+
+                    if (!targetSlotItem || _beginSlot.IsSuitableType(targetSlotItem)) 
+                    {
+                        Debug.Log(true);
+                        
+                        var endSlotItem = targetSlot.Item;
+                        if (endSlotItem)
+                            _beginSlot.Item = endSlotItem;
+                        
+                        targetSlot.Item = _beginSlotItem;
+                        _beginSlot.Item = targetSlotItem;
+                        _uiInventory.SwapItemsInInventory(_beginSlot, targetSlot);
+                    }
+                    else
+                    {
+                        _beginSlot.Item = _beginSlotItem;
+                        targetSlot.Item = targetSlotItem;
+                    }
                 }
                 else // Not in slot
                 {
-                    _beginSlot.Item = _item;
+                    _beginSlot.Item = _beginSlotItem;
                 }
             }
             else // Not in ui (TODO: may be drop feature later)
             {
-                _beginSlot.Item = _item;
+                _beginSlot.Item = _beginSlotItem;
             }
 
             _imageHolder.enabled = false;
-            _item = null;
+            _beginSlotItem = null;
         }
     }
 }
