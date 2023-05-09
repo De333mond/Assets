@@ -27,27 +27,44 @@ MonoBehaviour:
   sprite: {fileID: 1132856629, guid: 94e8c04738fe07f42ab5d74b27bb52c3, type: 3}
   type: 4
   Rarity: 0
-  Stats:
+  mainStats:
     Health: 0
-    MaxHealth: 30
+    MaxHealth: 0
     Mana: 0
     MaxMana: 0
-    attackStats:
-      physicalDamage: 0
-      fireDamage: 0
-      waterDamage: 0
-      airDamage: 0
-      earthDamage: 0
-      criticalChance: 0
-      criticalMultiply: 0
-      attackSpeed: 0
-    resistStats:
-      resistReduceCup: 0
-      fullResistAmount: 0
-      physicalResistance: 2
-      fireResistance: 5
-      waterResistance: 2
-      airResistance: 2
-      earthResistance: 2
-    WalkSpeed: 0
-    IsInvincible: 0
+    WalkSpeed: 5
+  attackStats:
+    physicalDamage: 2
+    fireDamage: 2
+    waterDamage: 2
+    airDamage: 2
+    earthDamage: 2
+    electricityDamage: 2
+    poisonDamage: 2
+    criticalChance: 0.1
+    criticalMultiply: 0.25
+    attackCooldown: 0
+    attackRange: 0
+    statusEffects:
+      fireStatusEffect:
+        Chance: 0
+        Duration: 0
+      frozenStatusEffect:
+        Chance: 0
+        Duration: 0
+      electricityStatusEffect:
+        Chance: 0
+        Duration: 0
+      poisonStatusEffect:
+        Chance: 0
+        Duration: 0
+  resistStats:
+    resistReduceCup: 0
+    fullResistAmount: 0
+    physicalResistance: 0
+    fireResistance: 0
+    waterResistance: 0
+    airResistance: 0
+    earthResistance: 0
+    electricityResistance: 0
+    poisonResistance: 0

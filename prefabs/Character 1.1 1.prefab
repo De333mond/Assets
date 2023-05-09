@@ -153,7 +153,7 @@ MonoBehaviour:
       MaxHealth: 100
       Mana: 0
       MaxMana: 0
-      WalkSpeed: 0
+      WalkSpeed: 40
     attackStats:
       physicalDamage: 0
       fireDamage: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
       poisonDamage: 0
       criticalChance: 0
       criticalMultiply: 0
-      attackSpeed: 0
+      attackCooldown: 0
       attackRange: 0
       statusEffects:
         fireStatusEffect:
@@ -211,7 +211,6 @@ MonoBehaviour:
   animator: {fileID: 5590450716771236277}
   particleJumpUp: {fileID: 6726239572808547132}
   particleJumpDown: {fileID: 6726239573186958885}
-  runSpeed: 40
   playerAttack:
     throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
     attackCheck: {fileID: 3334392600808307971}

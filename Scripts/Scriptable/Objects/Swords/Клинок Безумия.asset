@@ -41,18 +41,18 @@ MonoBehaviour:
     poisonDamage: 0
     criticalChance: 0
     criticalMultiply: 0
-    attackCooldown: 0
+    attackCooldown: 0.4
     attackRange: 2
     statusEffects:
       fireStatusEffect:
         Chance: 0
         Duration: 0
       frozenStatusEffect:
-        Chance: 1
-        Duration: 5
+        Chance: 0
+        Duration: 0
       electricityStatusEffect:
-        Chance: 1
-        Duration: 10
+        Chance: 0.5
+        Duration: 5
       poisonStatusEffect:
         Chance: 0
         Duration: 0
