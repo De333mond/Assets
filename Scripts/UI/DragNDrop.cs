@@ -65,8 +65,6 @@ namespace UI
 
                     if (!targetSlotItem || _beginSlot.IsSuitableType(targetSlotItem)) 
                     {
-                        Debug.Log(true);
-                        
                         var endSlotItem = targetSlot.Item;
                         if (endSlotItem)
                             _beginSlot.Item = endSlotItem;
