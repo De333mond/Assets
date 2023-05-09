@@ -25,6 +25,39 @@ namespace UniversalStatsSystem
         public float Magnitude => physicalDamage + fireDamage + waterDamage + airDamage + earthDamage +
                                   electricityDamage + poisonDamage;
 
+        public string ExtraInfo()
+        {
+            string result = "";
+            
+            if (physicalDamage != 0)
+                result += $"Physical damage: {physicalDamage.ToString("+0.#;-0.#")}\n"; 
+            if (fireDamage != 0)
+                result += $"Fire damage: {fireDamage.ToString("+0.#;-0.#")}\n";
+            if (waterDamage != 0)
+                result += $"Water damage: {waterDamage.ToString("+0.#;-0.#")}\n";
+            if (airDamage != 0)
+                result += $"Air damage: {airDamage.ToString("+0.#;-0.#")}\n"; 
+            if (earthDamage != 0)
+                result += $"Earth damage: {earthDamage.ToString("+0.#;-0.#")}\n";
+            if (electricityDamage != 0)
+                result += $"Electricity damage: {electricityDamage.ToString("+0.#;-0.#")}\n";
+            if (poisonDamage != 0)
+                result += $"Poison damage: {poisonDamage.ToString("+0.#;-0.#")}\n";
+            
+            if (criticalChance != 0)
+                result += $"Critical chance: {criticalChance.ToString("+0.#;-0.#")}\n"; 
+            if (criticalMultiply != 0)
+                result += $"Critical multiply: {criticalMultiply.ToString("+0.#;-0.#")}\n";
+            if (attackRange != 0)
+                result += $"Attack range: {attackRange.ToString("+0.#;-0.#")}\n";
+            if (attackCooldown != 0)
+                result += $"Attack cooldown: {attackCooldown.ToString("+0.#;-0.#")}\n";
+
+            result += statusEffects.ExtraInfo();
+            
+            return result;
+        }
+        
         public AttackStats(float damage)
         {
             physicalDamage = damage;

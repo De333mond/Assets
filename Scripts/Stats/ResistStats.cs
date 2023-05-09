@@ -9,17 +9,38 @@ namespace UniversalStatsSystem
     {
         [SerializeField] [Range(0, 1)] private float resistReduceCup; // 0.8 = 80% 
         [SerializeField] private float fullResistAmount; // 1000
-        [Space] public float physicalResistance;
+        
+        [Space] 
+        public float physicalResistance;
         public float fireResistance;
         public float waterResistance;
         public float airResistance;
         public float earthResistance;
         public float electricityResistance;
         public float poisonResistance;
-
-        public float Magnitude => physicalResistance + fireResistance + waterResistance + airResistance +
-                                  earthResistance + electricityResistance + poisonResistance;
-
+        
+        public string ExtraInfo()
+        {
+            string result = "";
+            
+            if (physicalResistance != 0)
+                result += $"Physical resist: {physicalResistance.ToString("+0.#;-0.#")}\n"; 
+            if (fireResistance != 0)
+                result += $"Fire resist: {fireResistance.ToString("+0.#;-0.#")}\n";
+            if (waterResistance != 0)
+                result += $"Water resist: {waterResistance.ToString("+0.#;-0.#")}\n";
+            if (airResistance != 0)
+                result += $"Air resist: {airResistance.ToString("+0.#;-0.#")}\n"; 
+            if (earthResistance != 0)
+                result += $"Earth resist: {earthResistance.ToString("+0.#;-0.#")}\n";
+            if (electricityResistance != 0)
+                result += $"Electricity resist: {electricityResistance.ToString("+0.#;-0.#")}\n";
+            if (poisonResistance != 0)
+                result += $"Poison resist: {poisonResistance.ToString("+0.#;-0.#")}\n";
+            
+            return result;
+        }
+        
         public ResistStats(float resistance)
         {
             resistReduceCup = 0.8f;

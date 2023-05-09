@@ -111,12 +111,14 @@ namespace UniversalStatsSystem
         public virtual string ExtraInfo()
         {
             string result = "";
-            if (MaxHealth > 0)
-                result += $"MaxHealth: +{MaxHealth}\n"; 
-            if (MaxMana > 0)
-                result += $"MaxMana: +{MaxMana}\n";
-            if (WalkSpeed > 0)
-                result += $"Walk Speed: +{WalkSpeed}\n";
+            
+            if (MaxHealth != 0)
+                result += $"Max health: {MaxHealth.ToString("+0.#;-0.#")}\n"; 
+            if (MaxMana != 0)
+                result += $"Max mana: {MaxMana.ToString("+0.#;-0.#")}\n";
+            if (WalkSpeed != 0)
+                result += $"Walk speed: {WalkSpeed.ToString("+0.#;-0.#")}\n";
+            
             return result;
         }
     }

@@ -18,7 +18,7 @@ namespace PlayerInventory.Scriptable
 
         public override string Info()
         {
-            return base.Info() + MainStats.ExtraInfo();
+            return base.Info() + MainStats.ExtraInfo() + attackStats.ExtraInfo() + resistStats.ExtraInfo();
         }
     }
 }

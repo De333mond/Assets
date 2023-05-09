@@ -8,7 +8,7 @@ namespace PlayerInventory.Scriptable
     {
         public override string Info()
         {
-            return base.Info() + $"Attack range: {AttackStats.attackRange}\n";
+            return base.Info();
         }
     }
 }

@@ -52,7 +52,37 @@ public class StatusEffects
     public float PoisonEffectChance => poisonStatusEffect.Chance;
     public float PoisonEffectDuration => poisonStatusEffect.Duration;
 
+    public string ExtraInfo()
+    {
+        string result = "";
+        
+        if (fireStatusEffect.Chance != 0 || fireStatusEffect.Duration != 0)
+        {
+            result += $"fireStatusEffect chance: {fireStatusEffect.Chance.ToString("+0.#;-0.#")}\n";
+            result += $"fireStatusEffect duration: {fireStatusEffect.Duration.ToString("+0.#;-0.#")}\n";
 
+        }
+        if (frozenStatusEffect.Chance != 0 || frozenStatusEffect.Duration != 0)
+        {
+            result += $"frozenStatusEffect chance: {frozenStatusEffect.Chance.ToString("+0.#;-0.#")}\n";
+            result += $"frozenStatusEffect duration: {frozenStatusEffect.Duration.ToString("+0.#;-0.#")}\n";
+
+        }
+        if (electricityStatusEffect.Chance != 0 || electricityStatusEffect.Duration != 0)
+        {
+            result += $"electricityStatusEffect chance: {electricityStatusEffect.Chance.ToString("+0.#;-0.#")}\n";
+            result += $"electricityStatusEffect duration: {electricityStatusEffect.Duration.ToString("+0.#;-0.#")}\n";
+
+        }
+        if (poisonStatusEffect.Chance != 0 || poisonStatusEffect.Duration != 0)
+        {
+            result += $"poisonStatusEffect chance: {poisonStatusEffect.Chance.ToString("+0.#;-0.#")}\n";
+            result += $"poisonStatusEffect duration: {poisonStatusEffect.Duration.ToString("+0.#;-0.#")}\n";
+        }
+
+        return result;
+    }
+    
     public StatusEffects()
     {
         fireStatusEffect = new StatusEffect(0f, 0f);

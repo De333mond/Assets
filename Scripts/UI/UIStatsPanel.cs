@@ -27,8 +27,8 @@ namespace UI
             var StatsSystem = Player.Instance.StatsSystem;
             health.text = $"Здоровье: {StatsSystem.MainStats.Health}/{StatsSystem.MainStats.MaxHealth}";
             mana.text = $"Мана: {StatsSystem.MainStats.Mana}/{StatsSystem.MainStats.MaxMana}";
-            armor.text = $"Магнитуда сопротивлений: {StatsSystem.ResistStats.Magnitude}";
-            baseDamage.text = $"Физический урон: {StatsSystem.AttackStats}";
+            armor.text = $"Магнитуда сопротивлений: {StatsSystem.ResistStats.ExtraInfo()}";
+            baseDamage.text = $"Физический урон: {StatsSystem.AttackStats.ExtraInfo()}";
             critChance.text = $"Шанс крита: {StatsSystem.AttackStats.criticalChance * 100}%";
             CritMulty.text = $"Множитель крита: {StatsSystem.AttackStats.criticalMultiply * 100}%";
             attackSpeed.text = $"Скорость атаки: {StatsSystem.AttackStats.attackCooldown * 100}%";
