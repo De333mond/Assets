@@ -29,7 +29,7 @@ MonoBehaviour:
     Health: 0
     MaxHealth: 0
     Mana: 0
-    MaxMana: 0
+    MaxMana: 50
     WalkSpeed: 0
   attackStats:
     physicalDamage: 0

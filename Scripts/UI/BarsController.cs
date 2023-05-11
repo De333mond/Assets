@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Character;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -9,22 +11,24 @@ namespace UI
         [SerializeField] private Slider _ManaSlider;
         [SerializeField] private Slider _ExperienceSlider;
 
-        public float Health { get => _HealthSlider.value; set => _HealthSlider.value = value; }
-        public float Mana { get => _ManaSlider.value; set => _ManaSlider.value = value; }
-        public float Experience { get => _ExperienceSlider.value; set => _ExperienceSlider.value = value; }
-        
-        public void SetSliderMaxValues(float Health, float Mana, float Experience)
+        private void Start()
         {
-            _HealthSlider.maxValue = Health;
-            _ManaSlider.maxValue = Mana;
-            _ExperienceSlider.maxValue = Experience;
-        }
+            Player.Instance.StatsSystem.OnHealthStatsChange += SetHealthSliderValue;
+            Player.Instance.StatsSystem.OnManaStatsChange += SetManaSliderValue;
 
-        public void SetSliderValues(float Health, float Mana, float Experience)
+            SetHealthSliderValue();
+            SetManaSliderValue();
+            _ExperienceSlider.value = 0;
+        }
+        
+        private void SetHealthSliderValue()
         {
-            _HealthSlider.value = Health;
-            _ManaSlider.value = Mana;
-            _ExperienceSlider.value = Experience;
+            _HealthSlider.value = Player.Instance.StatsSystem.MainStats.Health / Player.Instance.StatsSystem.MainStats.MaxHealth;
+        }
+        
+        private void SetManaSliderValue()
+        {
+            _ManaSlider.value = Player.Instance.StatsSystem.MainStats.Mana / Player.Instance.StatsSystem.MainStats.MaxMana;
         }
     }
 }

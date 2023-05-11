@@ -27,15 +27,20 @@ namespace UniversalStatsSystem
         [HideInInspector] public UnityEvent OnDeath;
         [HideInInspector] public UnityEvent OnStatsChanged;
         
+        public event Action OnHealthStatsChange;
+        public event Action OnManaStatsChange;
+
         public void Init()
         {
             MainStats.Health = MainStats.MaxHealth;
+            MainStats.Mana = MainStats.MaxMana;
             OnStatsChanged = new UnityEvent();
         }
         
         public void Heal(float value)
         {
             MainStats.Health = Mathf.Min(MainStats.Health + value, MainStats.MaxHealth);
+            OnHealthStatsChange?.Invoke();
         }
 
         public void TakeDamage(AttackStats attackStats)
@@ -45,7 +50,7 @@ namespace UniversalStatsSystem
 
             float damageMagnitude = attackStats * ResistStats;
             MainStats.Health -= damageMagnitude;
-            
+            OnHealthStatsChange?.Invoke();
             if (MainStats.Health < 0)
                 OnDeath.Invoke();
 
@@ -64,6 +69,8 @@ namespace UniversalStatsSystem
             this.mainStats += mainStats;
             this.attackStats += attackStats;
             this.resistStats += resistStats;
+            OnHealthStatsChange?.Invoke();
+            OnManaStatsChange?.Invoke();
         }
         
         public void RemoveStats(Stats mainStats, AttackStats attackStats, ResistStats resistStats)
@@ -71,6 +78,8 @@ namespace UniversalStatsSystem
             this.mainStats -= mainStats;
             this.attackStats -= attackStats;
             this.resistStats -= resistStats;
+            OnHealthStatsChange?.Invoke();
+            OnManaStatsChange?.Invoke();
         }
     }
 
@@ -95,7 +104,13 @@ namespace UniversalStatsSystem
         public static Stats operator +(Stats a, Stats b)
         {
             a.MaxHealth += b.MaxHealth;
+            if (a.Health > a.MaxHealth)
+                a.Health = a.MaxHealth;
+            
             a.MaxMana += b.MaxMana;
+            if (a.Mana > a.MaxMana)
+                a.Mana = a.MaxMana;
+            
             a.WalkSpeed += b.WalkSpeed;
             return a;
         }
@@ -103,7 +118,13 @@ namespace UniversalStatsSystem
         public static Stats operator -(Stats a, Stats b)
         {
             a.MaxHealth -= b.MaxHealth;
+            if (a.Health > a.MaxHealth)
+                a.Health = a.MaxHealth;
+            
             a.MaxMana -= b.MaxMana;
+            if (a.Mana > a.MaxMana)
+                a.Mana = a.MaxMana;
+            
             a.WalkSpeed -= b.WalkSpeed;
             return a;
         }
