@@ -212,7 +212,7 @@ MonoBehaviour:
   particleJumpUp: {fileID: 6726239572808547132}
   particleJumpDown: {fileID: 6726239573186958885}
   playerAttack:
-    throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
+    throwableObject: {fileID: 2424522076249060556, guid: 73778ccc44e7f0f4993a8b59979695f6, type: 3}
     attackCheck: {fileID: 3334392600808307971}
     animator: {fileID: 5590450716771236277}
     canAttack: 1
