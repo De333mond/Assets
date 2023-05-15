@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Character
 {
@@ -28,6 +30,13 @@ namespace Character
 			{
 				camTransform = GetComponent(typeof(Transform)) as Transform;
 			}
+
+		}
+
+		private void Start()
+		{
+			if(Target == null)
+				Target = Player.Instance.CharacterCenter;
 
 			camTransform.position = Target.position;
 		}

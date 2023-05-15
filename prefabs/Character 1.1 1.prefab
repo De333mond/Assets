@@ -217,6 +217,7 @@ MonoBehaviour:
     animator: {fileID: 5590450716771236277}
     canAttack: 1
     isTimeToCheck: 0
+  characterCenter: {fileID: 5590450716956773158}
   Inventory:
     <Size>k__BackingField: 16
     _bagItems: []
@@ -235,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc442fb637948f5bd86baf757e5678a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiInventory: {fileID: 0}
 --- !u!1 &5590450716771236274
 GameObject:
   m_ObjectHideFlags: 0

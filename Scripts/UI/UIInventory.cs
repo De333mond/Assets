@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Character;
 using PlayerInventory.Scriptable;
 using Unity.VisualScripting;
@@ -19,8 +20,16 @@ namespace UI
         private bool _isActive;
 
         public Image ImageHolder { get; private set; }
-        
-        
+        public static UIInventory Instance { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance != null)
+                Destroy(this);
+
+            Instance = this;
+        }
+
         private void Start()
         {
             _bagSlotsCount = Player.Instance.Inventory.Size;

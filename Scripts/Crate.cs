@@ -6,15 +6,14 @@ public class Crate : MonoBehaviour
 {
     [SerializeField] private GameObject _interractKeyImg;
     [SerializeField] private Sprite _brokenCrate;
-
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] SpriteRenderer _spriteRenderer;
+    
     private ItemDropper _dropper;
     private bool _hasDrop = false;
     private void Awake()
     {
         _interractKeyImg.SetActive(false);
         _dropper = GetComponent<ItemDropper>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D col)

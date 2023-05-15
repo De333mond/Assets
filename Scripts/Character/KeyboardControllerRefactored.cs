@@ -6,12 +6,13 @@ namespace Character
 {
     public class KeyboardControllerRefactored : MonoBehaviour
     {
-        [SerializeField] private UIInventory _uiInventory;
+        private UIInventory _uiInventory;
         private Player _player;
 
         private void Start()
         {
-            _player = GetComponent<Player>();
+            _uiInventory = UIInventory.Instance;
+            _player = Player.Instance;
         }
 
         private void Update()

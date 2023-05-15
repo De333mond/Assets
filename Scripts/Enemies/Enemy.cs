@@ -51,6 +51,9 @@ public class Enemy : CharacterBase
 
         StatusEffectSystem.OnFrozenStatusStart += FrozenStatus;
         StatusEffectSystem.OnFrozenStatusEnd += UnFrozenStatus;
+
+        if(_target == null)
+            _target = Player.Instance.CharacterCenter;
     }
 
     private bool _frozen = false;

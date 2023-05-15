@@ -12,9 +12,12 @@ namespace Character
         [field: Header("Player")] [field: Space]
         
         [SerializeField] private PlayerAttack playerAttack;
+        [SerializeField] private Transform characterCenter;
+
         public bool CanAttack { get => playerAttack.canAttack;  set => playerAttack.canAttack = value; }
         
         public static Player Instance;
+        public Transform CharacterCenter => characterCenter;
         public Inventory Inventory;
         public bool IsAlive { private set; get; }
         
