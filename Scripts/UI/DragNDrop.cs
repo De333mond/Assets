@@ -16,7 +16,7 @@ namespace UI
 
         private void Start()
         {
-            _uiInventory = FindObjectOfType<UIInventory>();
+            _uiInventory = UIInventory.Instance;
             _imageHolder = _uiInventory.ImageHolder;
         }
 
