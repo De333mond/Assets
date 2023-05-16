@@ -196,18 +196,18 @@ MonoBehaviour:
     OnStatsChanged:
       m_PersistentCalls:
         m_Calls: []
-  m_JumpForce: 18
-  _gravityForce: -9.8
-  _gravityScale: 3
-  m_MovementSmoothing: 0.05
-  m_AirControl: 1
-  m_WhatIsGround:
+  canDoubleJump: 1
+  jumpForce: 18
+  gravityForce: -9.8
+  gravityScale: 3
+  movementSmoothing: 0.05
+  dashForce: 25
+  airControl: 1
+  whatIsGround:
     serializedVersion: 2
     m_Bits: 21
-  m_GroundCheck: {fileID: 6726239572422306635}
-  m_WallCheck: {fileID: 6726239573333539037}
-  canDoubleJump: 1
-  m_DashForce: 25
+  groundCheck: {fileID: 6726239572422306635}
+  wallCheck: {fileID: 6726239573333539037}
   animator: {fileID: 5590450716771236277}
   particleJumpUp: {fileID: 6726239572808547132}
   particleJumpDown: {fileID: 6726239573186958885}
@@ -219,7 +219,7 @@ MonoBehaviour:
     isTimeToCheck: 0
   characterCenter: {fileID: 5590450716956773158}
   Inventory:
-    <Size>k__BackingField: 16
+    <Size>k__BackingField: 32
     _bagItems: []
     onBagChanged:
       m_PersistentCalls:

@@ -90,12 +90,12 @@ MonoBehaviour:
       WalkSpeed: 5
     attackStats:
       physicalDamage: 0
-      fireDamage: 0
-      waterDamage: 0
-      airDamage: 0
-      earthDamage: 0
-      electricityDamage: 0
-      poisonDamage: 0
+      fireDamage: 1
+      waterDamage: 1
+      airDamage: 1
+      earthDamage: 1
+      electricityDamage: 1
+      poisonDamage: 1
       criticalChance: 0
       criticalMultiply: 0
       attackCooldown: 0
@@ -130,15 +130,15 @@ MonoBehaviour:
     OnStatsChanged:
       m_PersistentCalls:
         m_Calls: []
-  _patrolRange: {x: 18, y: 6}
-  _stayCooldown: 2
-  _attackRange: 2
-  _attackCooldown: 2
-  _attackPoint: {fileID: 382606478015582357}
-  _target: {fileID: 0}
+  patrolRange: {x: 18, y: 6}
+  stayCooldown: 2
+  attackRange: 1.5
+  attackCooldown: 2
+  attackPoint: {fileID: 382606478015582357}
+  target: {fileID: 0}
   walk: {fileID: 8300000, guid: 054c856b7f97a5340943a4be85c78e9d, type: 3}
   attack: {fileID: 8300000, guid: bcba368ab9a12bc458aec56e9cbbfe57, type: 3}
-  _animator: {fileID: 382606479749978077}
+  animator: {fileID: 382606479749978077}
 --- !u!114 &382606478250803099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPositionOffset: {x: 0, y: 0, z: 0}
-  _collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
+  collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
   _DropSet:
-    _randomDropAmount: 1
+    randomDropAmount: 1
     randomDropList:
     - item: {fileID: 11400000, guid: e544d56e5d14c7d4abc797943637fe62, type: 2}
       weight: 200

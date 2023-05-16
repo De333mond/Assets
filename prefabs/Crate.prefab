@@ -178,9 +178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPositionOffset: {x: 0, y: 1, z: 0}
-  _collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
+  collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
   _DropSet:
-    _randomDropAmount: 1
+    randomDropAmount: 1
     randomDropList:
     - item: {fileID: 11400000, guid: 5a3862797e9e1bc488a53a556d314a88, type: 2}
       weight: 0
@@ -227,9 +227,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70346811981481a4d9e996c1976f8660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interractKeyImg: {fileID: 2511012468888211275}
-  _brokenCrate: {fileID: 21300000, guid: 77d2efeb9c66e8441ba067d1d3f39f4a, type: 3}
-  _spriteRenderer: {fileID: 4232927067777314433}
+  interactKeyImg: {fileID: 2511012468888211275}
+  brokenCrate: {fileID: 21300000, guid: 77d2efeb9c66e8441ba067d1d3f39f4a, type: 3}
+  spriteRenderer: {fileID: 4232927067777314433}
 --- !u!1 &5056951170057838237
 GameObject:
   m_ObjectHideFlags: 0

@@ -188,9 +188,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPositionOffset: {x: 0, y: 0, z: 0}
-  _collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
+  collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
   _DropSet:
-    _randomDropAmount: 1
+    randomDropAmount: 1
     randomDropList:
     - item: {fileID: 11400000, guid: 47430494c777ea44692f449b233af553, type: 2}
       weight: 200
@@ -262,15 +262,15 @@ MonoBehaviour:
     OnStatsChanged:
       m_PersistentCalls:
         m_Calls: []
-  _patrolRange: {x: 17.7, y: 5.56}
-  _stayCooldown: 3
-  _attackRange: 1.76
-  _attackCooldown: 2
-  _attackPoint: {fileID: 3922831096558359052}
-  _target: {fileID: 0}
+  patrolRange: {x: 18, y: 6}
+  stayCooldown: 2
+  attackRange: 2
+  attackCooldown: 2
+  attackPoint: {fileID: 3922831096558359052}
+  target: {fileID: 0}
   walk: {fileID: 8300000, guid: 054c856b7f97a5340943a4be85c78e9d, type: 3}
   attack: {fileID: 8300000, guid: bcba368ab9a12bc458aec56e9cbbfe57, type: 3}
-  _animator: {fileID: 7283214287847628905}
+  animator: {fileID: 7283214287847628905}
 --- !u!50 &6049573435550638604
 Rigidbody2D:
   serializedVersion: 4

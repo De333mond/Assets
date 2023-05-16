@@ -9,26 +9,25 @@ namespace Character
 
 	public class CameraFollow : MonoBehaviour
 	{
+		[SerializeField] private Vector3 positionOffset;
+
 		public float FollowSpeed = 2f;
 		public Transform Target;
 		
-		private Transform camTransform;
-
 		public float shakeDuration = 0f;
-
 		public float shakeAmount = 0.1f;
 		public float decreaseFactor = 1.0f;
-		[SerializeField] private Vector3 _PositionOffset;
 
-		
+		private Transform _camTransform;
+
 		Vector3 originalPos;
 
 		void Awake()
 		{
 			Cursor.visible = false;
-			if (camTransform == null)
+			if (_camTransform == null)
 			{
-				camTransform = GetComponent(typeof(Transform)) as Transform;
+				_camTransform = GetComponent(typeof(Transform)) as Transform;
 			}
 
 		}
@@ -38,23 +37,23 @@ namespace Character
 			if(Target == null)
 				Target = Player.Instance.CharacterCenter;
 
-			camTransform.position = Target.position;
+			_camTransform.position = Target.position;
 		}
 
 		void OnEnable()
 		{
-			originalPos = camTransform.localPosition;
+			originalPos = _camTransform.localPosition;
 		}
 
 		private void Update()
 		{
 			if(Target == null) return;
 			
-			transform.position = Vector3.Slerp(transform.position, Target.position + _PositionOffset, FollowSpeed * Time.deltaTime);
+			transform.position = Vector3.Slerp(transform.position, Target.position + positionOffset, FollowSpeed * Time.deltaTime);
 
 			if (shakeDuration > 0)
 			{
-				camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+				_camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
 
 				shakeDuration -= Time.deltaTime * decreaseFactor;
 			}
@@ -62,7 +61,7 @@ namespace Character
 
 		public void ShakeCamera()
 		{
-			originalPos = camTransform.localPosition;
+			originalPos = _camTransform.localPosition;
 			shakeDuration = 0.2f;
 		}
 	}

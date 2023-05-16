@@ -10,12 +10,11 @@ public class WeightDrop
 {
     
     [Range(0,10)]
-    [SerializeField] private int _randomDropAmount;
+    [SerializeField] private int randomDropAmount;
     [SerializeField] private WeightedItem[] randomDropList;
     [SerializeField] private Item[] constantDropList;
 
     private int[] _weights;
-    private int _totalWeight;
     private int _maxWeight = 0;
 
     private void InitTotalWeight()
@@ -40,7 +39,7 @@ public class WeightDrop
 
         if (randomDropList.Length > 0)
         {
-            for (var i = 0; i < _randomDropAmount; i++)
+            for (var i = 0; i < randomDropAmount; i++)
             {
                 var rand = Random.Range(0, _maxWeight);
                 

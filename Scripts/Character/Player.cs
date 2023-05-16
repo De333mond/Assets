@@ -11,17 +11,16 @@ namespace Character
     {
         [field: Header("Player")] [field: Space]
         
-        [SerializeField] private PlayerAttack playerAttack;
         [SerializeField] private Transform characterCenter;
-
-        public bool CanAttack { get => playerAttack.canAttack;  set => playerAttack.canAttack = value; }
-        
-        public static Player Instance;
-        public Transform CharacterCenter => characterCenter;
+        [SerializeField] private PlayerAttack playerAttack;
         public Inventory Inventory;
+        
+        public Transform CharacterCenter => characterCenter;
+        public bool CanAttack { get => playerAttack.canAttack;  set => playerAttack.canAttack = value; }
         public bool IsAlive { private set; get; }
-        
-        
+
+        public static Player Instance { private set; get; }
+
         protected override void OnAwake()
         {
             base.OnAwake();

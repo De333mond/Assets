@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 4223589738329766633}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7873979657875551111
 SpriteRenderer:
@@ -98,6 +98,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -127,19 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPositionOffset: {x: 0, y: 0, z: 0}
-  _collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
-  _droppedItemsParent: {fileID: 0}
+  collectablePrefab: {fileID: 6422088307482987705, guid: 611767f8ce6148e418ebd81e5603e670, type: 3}
   _DropSet:
-    _dropAmount: 4
-    droplist:
-    - item: {fileID: 11400000, guid: 88fc58435c57ec54facafa9270c1cb42, type: 2}
-      weight: 1000
-    - item: {fileID: 11400000, guid: f8e258e64f2e21545b2c29b605cc152e, type: 2}
-      weight: 200
-    - item: {fileID: 11400000, guid: ec9836e52d90a2b4683027a8a92d4c68, type: 2}
-      weight: 50
-    - item: {fileID: 0}
-      weight: 2000
+    _randomDropAmount: 0
+    randomDropList: []
+    constantDropList: []
 --- !u!114 &7873979657875551108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,13 +163,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70346811981481a4d9e996c1976f8660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interractKeyImg: {fileID: 7098102043644063792}
+  interactKeyImg: {fileID: 7098102043644063792}
+  brokenCrate: {fileID: 0}
+  spriteRenderer: {fileID: 7873979657875551111}
 --- !u!1001 &7873979658399966327
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 7873979657875551110}
     m_Modifications:
     - target: {fileID: 1136165997274993735, guid: 77c08429bd251a44a8fec74796eff592, type: 3}
@@ -234,7 +247,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77c08429bd251a44a8fec74796eff592, type: 3}
 --- !u!4 &4223589738329766633 stripped
 Transform:

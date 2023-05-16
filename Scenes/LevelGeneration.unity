@@ -3710,8 +3710,6 @@ GameObject:
   - component: {fileID: 1279828314}
   - component: {fileID: 1279828313}
   - component: {fileID: 1279828312}
-  - component: {fileID: 1279828311}
-  - component: {fileID: 1279828310}
   - component: {fileID: 1279828309}
   - component: {fileID: 1279828308}
   - component: {fileID: 1279828307}
@@ -3777,12 +3775,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d11666ee1aeff4dbb0ae6b9f495a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionOffset: {x: 0, y: 2, z: -10}
   FollowSpeed: 2
   Target: {fileID: 0}
   shakeDuration: 0
   shakeAmount: 0.1
   decreaseFactor: 1
-  _PositionOffset: {x: 0, y: 4, z: -10}
 --- !u!82 &1279828309
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3879,34 +3877,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1279828310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1279828306}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f77b71b1a91112349802ccf2ae5f749f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _speed: 20
-  _offset: {x: 0, y: 4, z: 0}
---- !u!114 &1279828311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1279828306}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da9f1e94e9db24d4e95da3011ad0a6aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 5
 --- !u!81 &1279828312
 AudioListener:
   m_ObjectHideFlags: 0

@@ -7,9 +7,9 @@ namespace Character
 	{
 		[Header("PlayerMovement")] [Space]
 		
-		private float horizontalMove = 0f;
-		private bool jump = false;
-		private bool dash = false;
+		private float _horizontalMove = 0f;
+		private bool _jump = false;
+		private bool _dash = false;
 
 		//bool dashAxis = false;
 
@@ -27,7 +27,7 @@ namespace Character
 			
 			// horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-			animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+			animator.SetFloat("Speed", Mathf.Abs(_horizontalMove));
 
 			// if (Input.GetKeyDown(KeyCode.Z))
 			// {
@@ -57,17 +57,17 @@ namespace Character
 
 		public void Jump()
 		{
-			jump = true;
+			_jump = true;
 		}
 
 		public void Dash()
 		{
-			dash = true;
+			_dash = true;
 		}
 
 		public void Move(float direction)
 		{
-			horizontalMove = direction * StatsSystem.MainStats.WalkSpeed;
+			_horizontalMove = direction * StatsSystem.MainStats.WalkSpeed;
 		}
 		
 		public void OnFall()
@@ -85,9 +85,9 @@ namespace Character
 			base.OnFixedUpdate();
 			
 			// Move our character
-			Move(horizontalMove * Time.fixedDeltaTime, jump, dash);
-			jump = false;
-			dash = false;
+			Move(_horizontalMove * Time.fixedDeltaTime, _jump, _dash);
+			_jump = false;
+			_dash = false;
 		}
 	}
 }

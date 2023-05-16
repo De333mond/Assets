@@ -13,17 +13,17 @@ public class Enemy : CharacterBase
     [Header("Enemy")]
     [Space]
     [Header("Moving")]
-    [SerializeField] private Vector2 _patrolRange;
-    [SerializeField] private float _stayCooldown;
+    [SerializeField] private Vector2 patrolRange;
+    [SerializeField] private float stayCooldown;
     [Header("Attack")]
     
-    [SerializeField] private float _attackRange;
-    [SerializeField] private float _attackCooldown;
-    [SerializeField] private Transform _attackPoint;
-    [SerializeField] private Transform _target;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackCooldown;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private Transform target;
     
     [SerializeField] private AudioClip walk, attack;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator animator;
     
         
 
@@ -34,7 +34,7 @@ public class Enemy : CharacterBase
     private Rigidbody2D _rigidbody;
     private bool _stay;
     private bool _following, _attacking;
-    private float direction = 1f;
+    private float _direction = 1f;
     
     protected override void OnStart()
     {
@@ -52,15 +52,15 @@ public class Enemy : CharacterBase
         StatusEffectSystem.OnFrozenStatusStart += FrozenStatus;
         StatusEffectSystem.OnFrozenStatusEnd += UnFrozenStatus;
 
-        if(_target == null)
-            _target = Player.Instance.CharacterCenter;
+        if(target == null)
+            target = Player.Instance.CharacterCenter;
     }
 
     private bool _frozen = false;
     private void FrozenStatus()
     {
         _frozen = true;
-        _animator.SetFloat("velocity", 0);
+        animator.SetFloat("velocity", 0);
     }
     private void UnFrozenStatus()
     {
@@ -77,17 +77,17 @@ public class Enemy : CharacterBase
 
     private void Move()
     {
-        if(_target == null) return;
+        if(target == null) return;
         
-        float distanceToTarget = Vector2.Distance(_target.position, transform.position);
-        if (distanceToTarget < _patrolRange.x / 2 || _following)
+        float distanceToTarget = Vector2.Distance(target.position, transform.position);
+        if (distanceToTarget < patrolRange.x / 2 || _following)
         {
             _following = true;
             if (!_attacking)
             {
                 Follow();
-                var distance = Vector2.Distance(_target.position, _attackPoint.position);
-                if (distance < _attackRange)
+                var distance = Vector2.Distance(target.position, attackPoint.position);
+                if (distance < attackRange)
                 {
                     _source.clip = attack;
                     _source.loop = false;
@@ -116,28 +116,28 @@ public class Enemy : CharacterBase
         }
 
         
-        _animator.SetFloat("velocity", Math.Abs(_rigidbody.velocity.x / StatsSystem.MainStats.WalkSpeed));
+        animator.SetFloat("velocity", Math.Abs(_rigidbody.velocity.x / StatsSystem.MainStats.WalkSpeed));
     }
 
     private void Patrol()
     {
-        bool outOfBounds = transform.position.x > _startPosition.x + _patrolRange.x / 2 ||
-                           transform.position.x < _startPosition.x - _patrolRange.x / 2;
+        bool outOfBounds = transform.position.x > _startPosition.x + patrolRange.x / 2 ||
+                           transform.position.x < _startPosition.x - patrolRange.x / 2;
         
         if (outOfBounds && !_stay)
         {
-            direction *= -1;
+            _direction *= -1;
             _stay = true;
-            StartCoroutine(ResetStayState(_stayCooldown));
+            StartCoroutine(ResetStayState(stayCooldown));
         }
 
-        _rigidbody.velocity = new Vector2(StatsSystem.MainStats.WalkSpeed * direction, _rigidbody.velocity.y);
+        _rigidbody.velocity = new Vector2(StatsSystem.MainStats.WalkSpeed * _direction, _rigidbody.velocity.y);
     }
 
     
     private void Follow()
     {
-        if (transform.position.x > _target.position.x)
+        if (transform.position.x > target.position.x)
             _rigidbody.velocity = new Vector2(-StatsSystem.MainStats.WalkSpeed, _rigidbody.velocity.y);
         else
             _rigidbody.velocity = new Vector2(StatsSystem.MainStats.WalkSpeed, _rigidbody.velocity.y);
@@ -148,8 +148,8 @@ public class Enemy : CharacterBase
         
         _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         _attacking = true;
-        _animator.SetTrigger("Attack");
-        StartCoroutine(ResetAttackFlag(_attackCooldown / StatsSystem.AttackStats.attackCooldown));
+        animator.SetTrigger("Attack");
+        StartCoroutine(ResetAttackFlag(attackCooldown / StatsSystem.AttackStats.attackCooldown));
         
     }
 
@@ -159,7 +159,7 @@ public class Enemy : CharacterBase
         
         StatsSystem.TakeDamage(attackStats);
         Debug.Log(StatsSystem.MainStats.Health);
-        _animator.SetTrigger("Hurt");
+        animator.SetTrigger("Hurt");
         StartCoroutine(Stun());
 
         if (StatsSystem.MainStats.Health <= 0)
@@ -177,7 +177,7 @@ public class Enemy : CharacterBase
 
     private IEnumerator Die()
     {
-        _animator.SetTrigger("Dead");
+        animator.SetTrigger("Dead");
         yield return new WaitForSeconds(.4f);
         Destroy(gameObject);
         _itemDropper.DropItems();
@@ -187,7 +187,7 @@ public class Enemy : CharacterBase
     {
         yield return new WaitForSeconds(.2f);
 
-        Collider2D[] targets = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange);
+        Collider2D[] targets = Physics2D.OverlapCircleAll(attackPoint.position, attackRange);
         foreach (var target in targets)
         {
             if (target.CompareTag("Player"))
@@ -210,8 +210,8 @@ public class Enemy : CharacterBase
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(transform.position, _patrolRange);
-        Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
+        Gizmos.DrawWireCube(transform.position, patrolRange);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         Gizmos.DrawWireSphere(Position, 5f);//electricity status effect radius
     }
 }
