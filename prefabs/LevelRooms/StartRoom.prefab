@@ -13231,6 +13231,10 @@ PrefabInstance:
       value: Crate
       objectReference: {fileID: 0}
     - target: {fileID: 3250631897803033848, guid: 6a3adf34f130a964c93587f156c25b0d, type: 3}
+      propertyPath: _DropSet.randomDropList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3250631897803033848, guid: 6a3adf34f130a964c93587f156c25b0d, type: 3}
       propertyPath: _DropSet.constantDropList.Array.size
       value: 16
       objectReference: {fileID: 0}

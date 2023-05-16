@@ -16,6 +16,7 @@ public class WeightDrop
 
     private int[] _weights;
     private int _totalWeight;
+    private int _maxWeight = 0;
 
     private void InitTotalWeight()
     {
@@ -25,8 +26,10 @@ public class WeightDrop
 
         foreach (var item in randomDropList)
         {
-            _totalWeight += item.weight;
-            _weights[i++] = _totalWeight;
+            if(_maxWeight < item.weight)
+                _maxWeight = item.weight;
+            
+            _weights[i++] = item.weight;
         }
     }
 
@@ -35,18 +38,26 @@ public class WeightDrop
         InitTotalWeight();
         var dropSet = new List<Item>();
 
-        for (var i = 0; i < _randomDropAmount; i++)
+        if (randomDropList.Length > 0)
         {
-            var rand = Random.Range(0, _totalWeight);
-            var j = 0;
-            while (_weights[j] < rand)
-                j++;
+            for (var i = 0; i < _randomDropAmount; i++)
+            {
+                var rand = Random.Range(0, _maxWeight);
+                
+                if (rand < _weights[0])
+                    continue;
+                
+                var j = 0;
+                while (_weights[j] < rand)
+                    j++;
             
-            if (randomDropList[j].item is null)
-                continue;
+                if (randomDropList[j].item is null)
+                    continue;
             
-            dropSet.Add(randomDropList[j].item);
+                dropSet.Add(randomDropList[j].item);
+            }  
         }
+
 
         foreach (var item in constantDropList)
         {
