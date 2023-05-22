@@ -89,6 +89,6 @@ namespace Character
             StatsSystem.RemoveStats(stats,attackStats,resistStats);
 
             StatsSystem.OnStatsChanged.Invoke();
-        }   
+        }
     }
 }

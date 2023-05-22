@@ -24,8 +24,8 @@ namespace UI
             _placeholder.sprite = _placeholderImage;
             if (_placeholderImage)
                 _placeholder.enabled = true;
-            
-            _uiInventory = FindObjectOfType<UIInventory>();
+
+            _uiInventory = UIInventory.Instance;
         }
 
         public Item Item
@@ -67,6 +67,8 @@ namespace UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!_uiInventory.InfoPanel.enabled) return;
+        
             _uiInventory.InfoPanel.Hide();
         }
     }
