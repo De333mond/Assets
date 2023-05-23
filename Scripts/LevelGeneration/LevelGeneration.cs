@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Character;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -61,11 +62,14 @@ public class LevelGeneration : MonoBehaviour
     private List<GameObject> _spawnedEnemies = new List<GameObject>();
     private List<GameObject> _spawnedLootBoxes = new List<GameObject>();
     
-    private int iteration = 0;
-    private bool finalRoomSpawned = false;
+    private int _iteration = 0;
+    private bool _finalRoomSpawned = false;
 
     private void Awake()
     {
+        if (Player.Instance)
+            _player = Player.Instance.gameObject;
+        
         GenerateLevel();
         GenerateEnemies();
         GenerateLootBoxes();    
@@ -104,8 +108,8 @@ public class LevelGeneration : MonoBehaviour
         _spawnedLootBoxes = new List<GameObject>();
         _enemiesPositions = new List<Vector3>();
         _lootBoxesPositions = new List<Vector3>();
-        finalRoomSpawned = false;
-        iteration = 0;
+        _finalRoomSpawned = false;
+        _iteration = 0;
     }
     
     
@@ -145,7 +149,7 @@ public class LevelGeneration : MonoBehaviour
         CreateEndRooms(shortEnds);
         CreateEndRooms(wallEnds);
 
-        if(_player == null)
+        if(!_player)
             _player = Instantiate(playerPrefab, _playerSpawnPosition, Quaternion.Euler(0,0,0));
         else
             _player.transform.position = _playerSpawnPosition;
@@ -170,8 +174,8 @@ public class LevelGeneration : MonoBehaviour
 
         while (_spawnedRooms.Count < roomsCount)
         {
-            iteration++;
-            if (iteration > 250)
+            _iteration++;
+            if (_iteration > 250)
             {
                 Debug.Log("TOO MUCH");
                 if (_spawnedRooms.Count < roomsCount)
@@ -333,7 +337,7 @@ public class LevelGeneration : MonoBehaviour
 
     private bool CreateFinalRoom(List<GameObject> rooms)
     {
-        if(finalRoomSpawned) return false;
+        if(_finalRoomSpawned) return false;
         
         var connectorsDistances = new List<KeyValuePair<float, KeyValuePair<RoomData, ConnectorId>>>();
         foreach (var room in _roomsWithFreeConnectors)
@@ -473,7 +477,7 @@ public class LevelGeneration : MonoBehaviour
                 _roomsWithFreeConnectors.Remove(chosenRoomWithFreeConnectors);
             }
 
-            finalRoomSpawned = true;
+            _finalRoomSpawned = true;
             return true;
         }
 
