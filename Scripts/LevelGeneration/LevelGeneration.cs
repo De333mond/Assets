@@ -8,9 +8,12 @@ using Random = UnityEngine.Random;
 
 public class LevelGeneration : MonoBehaviour
 {
-    [SerializeField] private Transform roomsTransform;
-    [SerializeField] private Transform enemiesTransform;
-    [SerializeField] private Transform lootBoxesTransform;
+    [SerializeField] private GameObject playerPrefab;
+    
+    [Space]
+    [SerializeField] private Transform roomsParent;
+    [SerializeField] private Transform enemiesParent;
+    [SerializeField] private Transform lootBoxesParent;
     
     [SerializeField] [Range(0, 100)] private int minRoomCount;
     [SerializeField] [Range(0, 100)] private int maxRoomCount;
@@ -36,6 +39,9 @@ public class LevelGeneration : MonoBehaviour
 
     [Space]
     [SerializeField] private bool test;
+
+    private Vector3 _playerSpawnPosition;
+    private GameObject _player;
 
     private Dictionary<ConnectorId, List<GameObject>> _pairsConnectorRooms = new Dictionary<ConnectorId, List<GameObject>>()
         {
@@ -78,6 +84,8 @@ public class LevelGeneration : MonoBehaviour
     
     private void ClearLevel()
     {
+        GlobalLampBlinks.Instance.Clear();
+        
         foreach (var room in _spawnedRooms)
             Destroy(room.gameObject);
             
@@ -136,6 +144,11 @@ public class LevelGeneration : MonoBehaviour
         CreateEndRooms(endRooms);
         CreateEndRooms(shortEnds);
         CreateEndRooms(wallEnds);
+
+        if(_player == null)
+            _player = Instantiate(playerPrefab, _playerSpawnPosition, Quaternion.Euler(0,0,0));
+        else
+            _player.transform.position = _playerSpawnPosition;
     }
 
     
@@ -143,8 +156,10 @@ public class LevelGeneration : MonoBehaviour
 
     private void CreateStartRoom()
     {
-        RoomData startRoomData = Instantiate(startRoom, roomsTransform).GetComponent<RoomData>();
+        if (!Instantiate(startRoom, roomsParent).TryGetComponent(out StartRoomData startRoomData))
+            throw new Exception("Start room dont have script StartRoomData");
         
+        _playerSpawnPosition = startRoomData.PlayerSpawnPosition;
         _spawnedRooms.Add(startRoomData);
         _roomsWithFreeConnectors.Add(startRoomData);
     }
@@ -260,7 +275,7 @@ public class LevelGeneration : MonoBehaviour
             
             if(CheckIntersection(leftUpPosition, rightDownPosition)) continue;
             
-            GameObject newRoom = Instantiate(possibleRooms[possibleRoomIndex], roomsTransform);
+            GameObject newRoom = Instantiate(possibleRooms[possibleRoomIndex], roomsParent);
             RoomData newRoomDataSpawned = newRoom.GetComponent<RoomData>();
             newRoom.transform.position = currentFreeConnectorPosition -  connectorPositionNewRoom;
             chosenRoomWithFreeConnectors.TakeConnector(freeConnectorsOfChosenRoom[randomConnectorIndex]);
@@ -443,7 +458,7 @@ public class LevelGeneration : MonoBehaviour
             
             if(CheckIntersection(leftUpPosition, rightDownPosition)) continue;
 
-            GameObject newRoom = Instantiate(possibleRooms[possibleRoomIndex], roomsTransform);
+            GameObject newRoom = Instantiate(possibleRooms[possibleRoomIndex], roomsParent);
             RoomData newRoomDataSpawned = newRoom.GetComponent<RoomData>();
             newRoom.transform.position = currentFreeConnectorPosition -  connectorPositionNewRoom;
             chosenRoomWithFreeConnectors.TakeConnector(freeConnector);
@@ -548,7 +563,7 @@ public class LevelGeneration : MonoBehaviour
             
                 if(CheckIntersection(leftUpPosition, rightDownPosition)) continue;
 
-                GameObject newRoom = Instantiate(possibleRooms[possibleRoomIndex], roomsTransform);
+                GameObject newRoom = Instantiate(possibleRooms[possibleRoomIndex], roomsParent);
                 RoomData newRoomDataSpawned = newRoom.GetComponent<RoomData>();
                 newRoom.transform.position = currentFreeConnectorPosition -  connectorPositionNewRoom;
                 chosenRoomWithFreeConnectors.TakeConnector(connector);
@@ -632,7 +647,7 @@ public class LevelGeneration : MonoBehaviour
             int randomEnemyPositionIndex = Random.Range(0, _enemiesPositions.Count);
             int randomEnemyPrefabIndex = Random.Range(0, enemiesPrefabs.Count);
 
-            GameObject newEnemy = Instantiate(enemiesPrefabs[randomEnemyPrefabIndex], enemiesTransform);
+            GameObject newEnemy = Instantiate(enemiesPrefabs[randomEnemyPrefabIndex], enemiesParent);
             newEnemy.transform.position = _enemiesPositions[randomEnemyPositionIndex];
             
             _spawnedEnemies.Add(newEnemy);
@@ -652,7 +667,7 @@ public class LevelGeneration : MonoBehaviour
             int randomLootBoxPositionIndex = Random.Range(0, _lootBoxesPositions.Count);
             int randomLootBoxPrefabIndex = Random.Range(0, lootBoxesPrefabs.Count);
 
-            GameObject newLootBox = Instantiate(lootBoxesPrefabs[randomLootBoxPrefabIndex], lootBoxesTransform);
+            GameObject newLootBox = Instantiate(lootBoxesPrefabs[randomLootBoxPrefabIndex], lootBoxesParent);
             newLootBox.transform.position = _lootBoxesPositions[randomLootBoxPositionIndex];
             _spawnedLootBoxes.Add(newLootBox);
             _lootBoxesPositions.Remove(_lootBoxesPositions[randomLootBoxPositionIndex]);

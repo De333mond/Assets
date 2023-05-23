@@ -52,4 +52,9 @@ public class GlobalLampBlinks : MonoBehaviour
     {
         _lamps.Add(newAnimator);
     }
+
+    public void Clear()
+    {
+        _lamps = new List<Animator>();
+    }
 }

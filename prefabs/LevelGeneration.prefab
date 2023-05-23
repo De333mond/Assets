@@ -49,9 +49,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1b70e89d625d643b460456003472d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomsTransform: {fileID: 2078291741167980024}
-  enemiesTransform: {fileID: 4753795293819866349}
-  lootBoxesTransform: {fileID: 6475353127084756036}
+  playerPrefab: {fileID: 3619112614521590377, guid: 003737ddea825974ab05d105b1d4ca73, type: 3}
+  roomsParent: {fileID: 2078291741167980024}
+  enemiesParent: {fileID: 4753795293819866349}
+  lootBoxesParent: {fileID: 6475353127084756036}
   minRoomCount: 20
   maxRoomCount: 25
   minPercentEnemies: 50
