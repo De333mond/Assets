@@ -30,6 +30,8 @@ namespace Character
             else
                 Destroy(gameObject);
             
+            DontDestroyOnLoad(gameObject);
+            
             Inventory.Init();
             StatsSystem.Init();
             playerAttack.Init();
