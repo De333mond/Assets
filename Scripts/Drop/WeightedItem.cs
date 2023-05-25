@@ -1,5 +1,5 @@
 ﻿using System;
-using Scriptable;
+using PlayerInventory.Scriptable;
 using UnityEngine;
 
 [Serializable]

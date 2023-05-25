@@ -1,26 +1,92 @@
-using System;
-using Ability_system;
-using Inventory;
-using Stats_system;
-using Stats_System;
-using Unity.VisualScripting;
+﻿using New_Folder.Healthbar;
+using PlayerInventory;
+using PlayerInventory.Scriptable;
+using UniversalStatsSystem;
 using UnityEngine;
-using UnityEngine.Events;
-public class Player : Entity
-{ 
-    public float Damage => _abilitySystem.GetDamage();
-    public Stats Stats => _abilitySystem.Stats;
-    public PlayerInventory Inventory;
-    
-    protected override void Awake()
+using UnityEngine.Rendering;
+
+namespace Character
+{
+    public class Player : PlayerMovement
     {
-        base.Awake();
-        Inventory = new PlayerInventory(8, this);
-        Inventory.OnWeaponChanged.AddListener(item => _abilitySystem.SetWeapon(item));
+        [field: Header("Player")] [field: Space]
+        
+        [SerializeField] private Transform characterCenter;
+        [SerializeField] private PlayerAttack playerAttack;
+        public Inventory Inventory;
+        
+        public Transform CharacterCenter => characterCenter;
+        public bool CanAttack { get => playerAttack.canAttack;  set => playerAttack.canAttack = value; }
+        public bool IsAlive { private set; get; }
+
+        public static Player Instance { private set; get; }
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+            
+            if (!Instance)
+                Instance = this;
+            else
+                Destroy(gameObject);
+            
+            Inventory.Init();
+            StatsSystem.Init();
+            playerAttack.Init();
+
+            IsAlive = true;
+            StatsSystem.OnDeath.AddListener(Die);
+        }
+
+        public void Attack()
+        {
+            playerAttack.Attack();
+        }
+
+        public void ThrowWeapon()
+        {
+            playerAttack.ThrowWeapon();
+        }
+        
+        public void Heal(float value)
+        {
+            StatsSystem.Heal(value);
+        }
+        
+        public void TakeDamage(AttackStats attackStats, Vector3 position)
+        {
+            if(Invincible) return;
+            
+            TakeDamage(attackStats);
+            TakeDamage(position);
+        }
+
+        public override void TakeDamage(AttackStats attackStats)
+        {
+            base.TakeDamage(attackStats);
+
+            StatsSystem.TakeDamage(attackStats);
+        }
+        
+        private void Die()
+        {
+            IsAlive = false;
+
+            StartCoroutine(WaitToDead());
+        }
+        
+        public void ApplyItemStats(UniversalStatsSystem.Stats stats, AttackStats attackStats, ResistStats resistStats)
+        {
+            StatsSystem.ApplyStats(stats,attackStats,resistStats);
+
+            StatsSystem.OnStatsChanged.Invoke();
+        }
+
+        public void RemoveItemStats(UniversalStatsSystem.Stats stats, AttackStats attackStats, ResistStats resistStats)
+        {
+            StatsSystem.RemoveStats(stats,attackStats,resistStats);
+
+            StatsSystem.OnStatsChanged.Invoke();
+        }
     }
-    
-    
 }
-
-
-

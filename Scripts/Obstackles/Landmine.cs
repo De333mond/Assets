@@ -1,10 +1,11 @@
 using System.Collections;
+using Character;
 using UnityEngine;
+using UniversalStatsSystem;
 
 public class Landmine : MonoBehaviour
 {
-
-    [SerializeField] private float damage = 10;
+    [SerializeField] private AttackStats attackStats = new AttackStats(10);
     [SerializeField] private float explosionCooldown = .2f;
     [SerializeField] private float explosionRange;
     [SerializeField] private AudioClip _exploisionSound;
@@ -38,7 +39,7 @@ public class Landmine : MonoBehaviour
         source.loop = false;
         
         if (Vector2.Distance(transform.position, _player.gameObject.transform.position) <= explosionRange)
-            _player.TakeDamage(damage);
+            _player.TakeDamage(attackStats, transform.position);
     }
 
     private void DestroyObject()
