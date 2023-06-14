@@ -10,7 +10,7 @@ namespace Ability_system
         
         [SerializeField] private float cooldown;
         
-        public void Use(AbilitySystem abilitySystem)
+        public void Use()
         {
             
         }

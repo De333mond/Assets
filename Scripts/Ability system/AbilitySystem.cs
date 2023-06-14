@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using Scriptable;
+using PlayerInventory.Scriptable;
 using Stats_System;
 
 

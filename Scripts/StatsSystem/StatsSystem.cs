@@ -19,14 +19,14 @@ namespace Stats_System
             }
         }
 
-        public float GetDamageWithWeapon(Weapon weapon)
-        {
-            float damage = _baseStats.BaseDamage + weapon.Stats.Damage;
-            if (Random.value < (_baseStats.CriticalChance + weapon.Stats.CriticalChance))
-                damage *= (_baseStats.CriticalMultiply + weapon.Stats.CriticalMultiplier);
-
-            return damage;
-        }
+        // public float GetDamageWithWeapon(Weapon weapon)
+        // {
+        //     float damage = _baseStats.BaseDamage + weapon.Stats.Damage;
+        //     if (Random.value < (_baseStats.CriticalChance + weapon.Stats.CriticalChance))
+        //         damage *= (_baseStats.CriticalMultiply + weapon.Stats.CriticalMultiplier);
+        //
+        //     return damage;
+        // }
 
         public void TakeDamage(float damage)
         {

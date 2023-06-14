@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(ItemDropper))]
-public class Enemy : Entity
+public class Enemy2 : Entity
 {
     //TODO fix attack mechanic because too hard to kill without take damage 
     
