@@ -3,7 +3,8 @@ using System.Collections;
 using Character;
 using UnityEngine;
 using UniversalStatsSystem;
- 
+using Random = UnityEngine.Random;
+
 
 [RequireComponent(typeof(ItemDropper))]
 public class Enemy : CharacterBase
@@ -22,6 +23,9 @@ public class Enemy : CharacterBase
     [SerializeField] private Transform attackPoint;
     [SerializeField] private Transform target;
     
+    [SerializeField] private Transform groundCheckPoint;
+    [SerializeField] private float groundCheckRadius;
+
     [SerializeField] private AudioClip walk, attack;
     [SerializeField] private Animator animator;
     
@@ -35,10 +39,11 @@ public class Enemy : CharacterBase
     private bool _stay;
     private bool _following, _attacking;
     private float _direction = 1f;
-    
-    protected override void OnStart()
+    private bool _frozen = false;
+
+    protected override void OnAwake()
     {
-        base.OnStart();
+        base.OnAwake();
         
         _startPosition = transform.position;
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -47,16 +52,18 @@ public class Enemy : CharacterBase
         _isAlive = _canMove = true;
         _source = GetComponent<AudioSource>();
         _source.playOnAwake = false;
+        
         StatsSystem.Init();
-
+        
         StatusEffectSystem.OnFrozenStatusStart += FrozenStatus;
         StatusEffectSystem.OnFrozenStatusEnd += UnFrozenStatus;
 
         if(target == null)
             target = Player.Instance.CharacterCenter;
-    }
 
-    private bool _frozen = false;
+        _direction = Random.value >= 0.5f ? 1 : -1;
+    }
+    
     private void FrozenStatus()
     {
         _frozen = true;
