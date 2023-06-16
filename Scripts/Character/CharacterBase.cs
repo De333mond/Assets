@@ -18,8 +18,6 @@ public abstract class CharacterBase : MonoBehaviour, IDamageable, IStatusEffecta
     private void Awake()
     {
         OnAwake();
-        
-        StatusEffectSystem.OnAwake(this);
     }
 
     private void Start()
@@ -39,7 +37,7 @@ public abstract class CharacterBase : MonoBehaviour, IDamageable, IStatusEffecta
     
     protected virtual void OnAwake()
     {
-
+        StatusEffectSystem.OnAwake(this);
     }
 
     protected virtual void OnStart ()

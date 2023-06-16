@@ -45,7 +45,6 @@ public class Enemy : CharacterBase
     {
         base.OnAwake();
         
-        _startPosition = transform.position;
         _rigidbody = GetComponent<Rigidbody2D>();
         _itemDropper = GetComponent<ItemDropper>();
         // DeathEvent.AddListener(DropItems);
@@ -64,6 +63,8 @@ public class Enemy : CharacterBase
     protected override void OnStart()
     {
         base.OnStart();
+
+        _startPosition = transform.position;
         
         if(target == null)
             target = Player.Instance.CharacterCenter;
