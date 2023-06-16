@@ -219,6 +219,7 @@ public class Enemy : CharacterBase
     {
         Gizmos.DrawWireCube(transform.position, patrolRange);
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if(groundCheckPoint) Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
         Gizmos.DrawWireSphere(Position, 5f);//electricity status effect radius
     }
 }
