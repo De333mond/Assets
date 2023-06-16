@@ -58,10 +58,15 @@ public class Enemy : CharacterBase
         StatusEffectSystem.OnFrozenStatusStart += FrozenStatus;
         StatusEffectSystem.OnFrozenStatusEnd += UnFrozenStatus;
 
+        _direction = Random.value >= 0.5f ? 1 : -1;
+    }
+
+    protected override void OnStart()
+    {
+        base.OnStart();
+        
         if(target == null)
             target = Player.Instance.CharacterCenter;
-
-        _direction = Random.value >= 0.5f ? 1 : -1;
     }
     
     private void FrozenStatus()
