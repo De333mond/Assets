@@ -84,7 +84,8 @@ public class LevelGeneration : MonoBehaviour
     
     private void ClearLevel()
     {
-        GlobalLampBlinks.Instance.Clear();
+        if(GlobalLampBlinks.Instance)
+            GlobalLampBlinks.Instance.Clear();
         
         foreach (var room in _spawnedRooms)
             Destroy(room.gameObject);
