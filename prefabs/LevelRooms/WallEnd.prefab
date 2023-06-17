@@ -1057,7 +1057,7 @@ GameObject:
   - component: {fileID: 4768562911575484309}
   - component: {fileID: 4888713480064770101}
   - component: {fileID: 995069063046856657}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1787,11 +1787,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftUpSizePoint: {fileID: 6128655119048641754}
   rightDownSizePoint: {fileID: 8705656253010532128}
-  enemySpawnPoints: []
-  lootBoxSpawnPoints: []
   connectorsData:
   - id: 2
     point: {fileID: 8389870489024196753}
+  enemySpawnPoints: []
+  lootBoxSpawnPoints: []
 --- !u!1 &9204938565554524385
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,8 +5,9 @@ using UnityEngine;
 using UniversalStatsSystem;
 using Random = UnityEngine.Random;
 
-
 [RequireComponent(typeof(ItemDropper))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
 public class Enemy : CharacterBase
 {
     //TODO fix attack mechanic because too hard to kill without take damage 
@@ -23,14 +24,24 @@ public class Enemy : CharacterBase
     [SerializeField] private Transform attackPoint;
     [SerializeField] private Transform target;
     
+    [Header("Orientation checks")]
+    [SerializeField] private Transform wallFrontCheckPoint;
+    [SerializeField] private LayerMask wallFrontCheckLayers;
+    [Space]
+    [SerializeField] private Transform wallBackCheckPoint;
+    [SerializeField] private LayerMask wallBackCheckLayers;
+    [Space]
+    [SerializeField] private float wallCheckHeight;
+    [SerializeField] private float wallCheckWidth;
+    [Space]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius;
+    [SerializeField] private LayerMask groundCheckLayers;
 
-    [SerializeField] private AudioClip walk, attack;
+    [Header("Other")]
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioClip walk, attack;
     
-        
-
     private AudioSource _source;
     private Vector3 _startPosition;
     private ItemDropper _itemDropper;
@@ -92,13 +103,21 @@ public class Enemy : CharacterBase
     {
         if(target == null) return;
         
-        float distanceToTarget = Vector2.Distance(target.position, transform.position);
-        if (distanceToTarget < patrolRange.x / 2 || _following)
+        float distanceToTargetX = Mathf.Abs(target.position.x - transform.position.x);
+        float distanceToTargetY = Mathf.Abs(target.position.y - transform.position.y);
+        if (distanceToTargetX < patrolRange.x && distanceToTargetY < patrolRange.y)
         {
-            _following = true;
             if (!_attacking)
             {
-                Follow();
+                if (!WallFrontCheck() && GroundCheck())
+                {
+                    Follow();
+                }
+                else
+                {
+                    _rigidbody.velocity = Vector2.zero;
+                }
+                
                 var distance = Vector2.Distance(target.position, attackPoint.position);
                 if (distance < attackRange)
                 {
@@ -131,13 +150,15 @@ public class Enemy : CharacterBase
         
         animator.SetFloat("velocity", Math.Abs(_rigidbody.velocity.x / StatsSystem.MainStats.WalkSpeed));
     }
-
     private void Patrol()
     {
-        bool outOfBounds = transform.position.x > _startPosition.x + patrolRange.x / 2 ||
-                           transform.position.x < _startPosition.x - patrolRange.x / 2;
+        bool outOfBounds;
+        if (_direction > 0)
+            outOfBounds = transform.position.x > _startPosition.x + patrolRange.x / 2;
+        else
+            outOfBounds = transform.position.x < _startPosition.x - patrolRange.x / 2;
         
-        if (outOfBounds && !_stay)
+        if ((outOfBounds || WallFrontCheck() || !GroundCheck()) && !_stay)
         {
             _direction *= -1;
             _stay = true;
@@ -147,7 +168,21 @@ public class Enemy : CharacterBase
         _rigidbody.velocity = new Vector2(StatsSystem.MainStats.WalkSpeed * _direction, _rigidbody.velocity.y);
     }
 
+    private bool WallFrontCheck()
+    {
+        return Physics2D.OverlapBox(wallFrontCheckPoint.position, new Vector2(wallCheckWidth, wallCheckHeight),0f,wallFrontCheckLayers);
+    }
     
+    private bool WallBackCheck()
+    {
+        return Physics2D.OverlapBox(wallBackCheckPoint.position, new Vector2(wallCheckWidth, wallCheckHeight),0f,wallBackCheckLayers);
+    }
+    
+    private bool GroundCheck()
+    {
+        return Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundCheckLayers);
+    }
+
     private void Follow()
     {
         if (transform.position.x > target.position.x)
@@ -158,12 +193,10 @@ public class Enemy : CharacterBase
 
     private void Attack()
     {
-        
         _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         _attacking = true;
         animator.SetTrigger("Attack");
         StartCoroutine(ResetAttackFlag(attackCooldown / StatsSystem.AttackStats.attackCooldown));
-        
     }
 
     public override void TakeDamage(AttackStats attackStats)
@@ -225,6 +258,8 @@ public class Enemy : CharacterBase
     {
         Gizmos.DrawWireCube(transform.position, patrolRange);
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if(wallFrontCheckPoint) Gizmos.DrawWireCube(wallFrontCheckPoint.position, new Vector3(wallCheckWidth, wallCheckHeight, 0));
+        if(wallBackCheckPoint) Gizmos.DrawWireCube(wallBackCheckPoint.position, new Vector3(wallCheckWidth, wallCheckHeight, 0));
         if(groundCheckPoint) Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
         Gizmos.DrawWireSphere(Position, 5f);//electricity status effect radius
     }
