@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3257904192669957629}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheckPoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4592116124612686073}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallBackCheckPoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 429567546266952835}
   - component: {fileID: 8443097199884366511}
   - component: {fileID: 7283214287847628905}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3922831096558359052}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: attack point
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 6049573435550638604}
   - component: {fileID: 6969334090760310417}
   - component: {fileID: 9056550436945459009}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -336,11 +336,11 @@ MonoBehaviour:
   wallFrontCheckPoint: {fileID: 7313414356875064491}
   wallFrontCheckLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   wallBackCheckPoint: {fileID: 4592116124612686073}
   wallBackCheckLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   wallCheckHeight: 4.2
   wallCheckWidth: 1
   groundCheckPoint: {fileID: 3257904192669957629}
@@ -518,7 +518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7313414356875064491}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallFrontCheckPoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
