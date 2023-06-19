@@ -16,7 +16,7 @@ namespace Character
         public Inventory Inventory;
         
         public Transform CharacterCenter => characterCenter;
-        public bool CanAttack { get => playerAttack.canAttack;  set => playerAttack.canAttack = value; }
+        public bool AttackIsPossible { get => CanAttack && playerAttack.canAttack; }
         public bool IsAlive { private set; get; }
 
         public static Player Instance { private set; get; }
@@ -45,7 +45,8 @@ namespace Character
 
         public void Attack()
         {
-            playerAttack.Attack();
+            if(CanAttack)
+                playerAttack.Attack();
         }
 
         public void ThrowWeapon()
