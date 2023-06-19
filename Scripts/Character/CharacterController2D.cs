@@ -365,7 +365,7 @@ namespace Character
 			_rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
 			yield return new WaitForSeconds(1.1f);
 			Destroy(gameObject);
-			// SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+			UIController.SetWindow(ScreenEnum.GameplayMenuScreen);
 		}
 
 		private void OnDrawGizmosSelected()

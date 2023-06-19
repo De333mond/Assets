@@ -47,7 +47,7 @@ namespace Character
 			foreach (var target in targets)
 			{
 				if (target.transform.CompareTag("Enemy"))
-					target.GetComponent<Enemy>().TakeDamage(attackStats);
+					target.GetComponent<IDamageable>().TakeDamage(attackStats);
 			}
 			
 			canAttack = false;

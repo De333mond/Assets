@@ -25,11 +25,14 @@ namespace Character
         {
             base.OnAwake();
             
-            if (!Instance)
-                Instance = this;
-            else
+            if (Instance)
+            {
                 Destroy(gameObject);
+                return;
+            }
             
+            Instance = this;
+
             DontDestroyOnLoad(gameObject);
             
             Inventory.Init();
