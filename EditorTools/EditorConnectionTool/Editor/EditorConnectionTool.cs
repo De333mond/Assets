@@ -4,7 +4,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [EditorTool("ConnectionTool", typeof(ConnectionBlock))]
-public class ConnectionTool : EditorTool
+public class EditorConnectionTool : EditorTool
 {
    private const float MaxConnectionDistance = 5f;
    
