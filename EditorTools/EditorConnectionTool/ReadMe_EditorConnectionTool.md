@@ -27,7 +27,7 @@ EditorConnectionTool используется для того чтобы из м
 
 5. Перетаскиваете объект к другому объекту с скреплениями и они автоматически соединятся в местах креплений.
 
-![Step5](./ReadMeData/Step5.png)
+![Step5](./ReadMeData/Step5.gif)
 
 ## Настрока EditorConnectionTool
 
