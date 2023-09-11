@@ -11771,6 +11771,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8765180161326951430}
+  - component: {fileID: 776699424599850252}
   m_Layer: 0
   m_Name: LeftUpSizePoint
   m_TagString: Untagged
@@ -11793,6 +11794,18 @@ Transform:
   m_Father: {fileID: 2019785159726903055}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &776699424599850252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6818863060417845388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824c2427064bfcb4c8119106daa7a1f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7024290216491013991
 GameObject:
   m_ObjectHideFlags: 0
@@ -11802,6 +11815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 696196293780942456}
+  - component: {fileID: 8617996550198049776}
   m_Layer: 0
   m_Name: RightDownSizePoint
   m_TagString: Untagged
@@ -11824,6 +11838,18 @@ Transform:
   m_Father: {fileID: 2019785159726903055}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8617996550198049776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7024290216491013991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824c2427064bfcb4c8119106daa7a1f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7545035760085199162
 GameObject:
   m_ObjectHideFlags: 0

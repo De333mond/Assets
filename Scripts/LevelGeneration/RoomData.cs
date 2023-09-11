@@ -133,4 +133,11 @@ public class RoomData : MonoBehaviour
 
         return points;
     }
+    
+    [ContextMenu("Find size points")]
+    public void FindSizePoints()
+    {
+        leftUpSizePoint = GameObject.Find("LeftUpSizePoint").transform;
+        rightDownSizePoint = GameObject.Find("RightDownSizePoint").transform;
+    }
 }
