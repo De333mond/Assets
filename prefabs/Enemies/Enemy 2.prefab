@@ -87,7 +87,7 @@ MonoBehaviour:
   <StatsSystem>k__BackingField:
     mainStats:
       Health: 0
-      MaxHealth: 100
+      MaxHealth: 50
       Mana: 0
       MaxMana: 0
       WalkSpeed: 5
@@ -195,7 +195,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
